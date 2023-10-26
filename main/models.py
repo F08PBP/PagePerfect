@@ -12,16 +12,16 @@ USER_ROLES = (
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     revenue = models.BigIntegerField()
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=10, choices=USER_ROLES, null=True, blank=True)
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     money = models.BigIntegerField()
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=10, choices=USER_ROLES, null=True, blank=True)
 
 class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=10, choices=USER_ROLES, null=True, blank=True)
 
 
 
