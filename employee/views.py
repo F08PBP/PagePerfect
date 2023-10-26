@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http.response import JsonResponse
 from book.models import Book
-from employee.serializers import BookSerializer
+from django.http import HttpResponse
+from django.core import serializers
 
 # Create your views here.
 
@@ -13,12 +13,9 @@ def main(request):
     return render(request, 'employee.html', response)
 
 def catalogBook(request):
-    all_book = Book.objects.all()
-    print(all_book)
-    return JsonResponse({"data": BookSerializer(all_book)}, status=200)
-
-def settingCatalog(request):
-    return
+    data = Book.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def bookFromWriter(request):
-    return
+    data = Book.objects.filter(isAccept = False).all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
