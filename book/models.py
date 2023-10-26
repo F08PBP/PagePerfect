@@ -15,3 +15,5 @@ class Book(models.Model):
     text_reviews_count = models.IntegerField(null=True, blank=True)
     publication_date = models.TextField(null=True, blank=True)
     publisher = models.TextField(null=True, blank=True)
+    harga = models.IntegerField(null=True, blank=True)
+    jumlah_buku = models.IntegerField(null=True, blank=True)

@@ -27,7 +27,7 @@ def login_user(request):
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
-    return render(request, 'login.html', context)
+    return render(request, 'formLogin.html', context)
 
 
 def register(request):
