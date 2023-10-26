@@ -17,3 +17,6 @@ class Book(models.Model):
     publisher = models.TextField(null=True, blank=True)
     harga = models.IntegerField(null=True, blank=True)
     jumlah_buku = models.IntegerField(null=True, blank=True)
+    jumlah_terjual = models.IntegerField(default=0, blank=True)
+    isAccept = models.BooleanField(default=False)
+    isInCatalog = models.BooleanField(default=False)
