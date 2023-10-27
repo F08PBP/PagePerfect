@@ -3,12 +3,13 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages  
 from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -22,7 +23,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            response = HttpResponseRedirect(reverse("main:show_main"))
+            response = HttpResponseRedirect(reverse("member:show_main"))
             return response
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
@@ -41,18 +42,3 @@ def register(request):
             return redirect('main:login')
     context = {'form':form}
     return render(request, 'register.html', context)
-
-@login_required(login_url='/login')
-def show_main(request):
-
-    context = {
-        'name': request.user.username,
-    }
-
-    return render(request, "mainMember.html", context)
-
-def logout_user(request):
-    logout(request)
-    response = HttpResponseRedirect(reverse('main:landing'))
-    return response
-
