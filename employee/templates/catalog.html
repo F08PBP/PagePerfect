@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Perfect</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Main Catalog</h1>
+<div id="data-container">
+    
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'api/catalog',  
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Handle the returned data here
+
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                // Do something with each item, for example, append it to a list
+                    $('#data-container').append('<li>ID: ' + item.fields.bookID + ', Name: ' + item.fields.title + '</li>');
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
