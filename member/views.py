@@ -11,7 +11,10 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from book.models import Book
-from member.models import Member
+from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.core import serializers
+
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -29,3 +32,8 @@ def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:landing'))
     return response
+
+@login_required(login_url='/login')
+def get_books_json(request):
+    books_user = Book.objects.filter()
+    return HttpResponse(serializers.serialize('json', books_user))
