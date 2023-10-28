@@ -24,5 +24,5 @@ class Book(models.Model):
     harga = models.IntegerField(null=True, blank=True)
     jumlah_buku = models.IntegerField(null=True, blank=True)
     jumlah_terjual = models.IntegerField(default=0, blank=True)
-    statusAccept = models.CharField(max_length=10, choices=STATUS_CHOICES, default="No Status")
+    statusAccept = models.CharField(max_length=10, choices=STATUS_CHOICES, default="NO STATUS")
     isInCatalog = models.BooleanField(default=False)
