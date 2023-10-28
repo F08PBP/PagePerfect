@@ -82,53 +82,6 @@
             justify-content: center;
             margin: 28px;
         }
-
-        .carousel-container {
-    position: relative;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 600px;
-    overflow: hidden;
-}
-
-.carousel-slide {
-    display: flex;
-    width: 300%;
-    transition: transform 0.5s;
-}
-
-.card {
-    flex: 0 0 33.33%;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.card img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-#prev {
-    left: 0;
-}
-
-#next {
-    right: 0;
-}
-
     </style>
 
     <header class="header">
@@ -146,9 +99,6 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:login' %}">Login</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'member:show_books_bought' %}">Books Bought</a>
-                  </li>
                 </ul>
               </div>
             </div>
@@ -160,26 +110,8 @@
                 Welcome {{name}}
             </h1>
             <h2>
-                Here are the books we have!
+                Here are the books you have bought!
             </h2>
-            <div class="carousel-container">
-                <button class="carousel-button" id="prev">&#8249;</button>
-                <div class="carousel-slide">
-                    <div class="card">
-                        <h2>Card 1</h2>
-                        <p>Description of Card 1.</p>
-                    </div>
-                    <div class="card">
-                        <h2>Card 2</h2>
-                        <p>Description of Card 2.</p>
-                    </div>
-                    <div class="card">
-                        <h2>Card 3</h2>
-                        <p>Description of Card 3.</p>
-                    </div>
-                </div>
-                <button class="carousel-button" id="next">&#8250;</button>
-            </div>
 
             <div id="product_card" class="container_cards container card-container"></div>
             <p class="landing-main-text">
@@ -199,52 +131,9 @@
 </body>
 
 <script>
+    
 
-    async function getProducts() {
-        return fetch("{% url 'member:show_books' %}").then((res) => res.json())
-    }
 
-    async function cardsBooks() {
-        document.getElementById("product_card").innerHTML = ""
-        const products = await getProducts()
-        let htmlString = ''
-        products.forEach((item) => {
-            htmlString += `
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">${item.fields.title}</h5>
-                    <p class="card-text">Author : ${item.fields.authors}</p>
-                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
-
-                </div>
-            </div>
-            `
-        })
-        document.getElementById("product_card").innerHTML = htmlString
-    }
-
-    cardsBooks()
-
-const prevButton = document.getElementById("prev");
-const nextButton = document.getElementById("next");
-const slide = document.querySelector(".carousel-slide");
-
-let counter = 0;
-
-nextButton.addEventListener("click", () => {
-    if (counter < 2) {
-        counter++;
-        slide.style.transform = `translateX(-${counter * 100}%)`;
-    }
-});
-
-prevButton.addEventListener("click", () => {
-    if (counter > 0) {
-        counter--;
-        slide.style.transform = `translateX(-${counter * 100}%)`;
-    }
-});
 
 </script>
 
