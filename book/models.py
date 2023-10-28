@@ -3,6 +3,12 @@ from django.db import models
 # Create your models here.
 
 class Book(models.Model):
+    STATUS_CHOICES = [
+        ("ACCEPT", 'Accept'),
+        ("WAITING", 'Waiting'),
+        ("DENIED", 'Denied'),
+        ("NO STATUS", 'No Status'),
+    ]
     bookID = models.IntegerField(null=True, blank=True)
     title = models.TextField(null=True, blank=True)
     authors = models.TextField(null=True, blank=True)
@@ -18,5 +24,5 @@ class Book(models.Model):
     harga = models.IntegerField(null=True, blank=True)
     jumlah_buku = models.IntegerField(null=True, blank=True)
     jumlah_terjual = models.IntegerField(default=0, blank=True)
-    isAccept = models.BooleanField(default=False)
+    statusAccept = models.CharField(max_length=10, choices=STATUS_CHOICES, default="No Status")
     isInCatalog = models.BooleanField(default=False)
