@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Member, Employee, Author
 from django.contrib.auth.hashers import make_password
+from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -38,7 +40,7 @@ def login_user(request):
             if role is not None:
 
                 if role == 'Member':
-                    return redirect('main:show_mainWriter')
+                    return redirect('main:show_mainMember')
                 elif role == 'Writer':
                     return redirect('main:show_mainWriter')
                 else:
@@ -62,17 +64,18 @@ def register(request):
                 user = User.objects.create(username=name, password=hashed_password)
                 member = Member(user=user)
                 member.save()
-                return redirect('main:landing')
+                return JsonResponse({'success': True})
             elif request.POST['role'] == 'Writer':
                 user = User.objects.create(username=name, password=hashed_password)
                 writer = Author(user=user)
                 writer.save()
-                return redirect('main:landing')
+                return JsonResponse({'success': True})
             elif request.POST['role'] == 'Employee':
                 user = User.objects.create(username=name, password=hashed_password)
                 employee = Employee(user=user)
                 employee.save()
-                return redirect('main:landing')
+                return JsonResponse({'success': True})
+            return JsonResponse({'success': False, 'error_message': 'Invalid registration data'})
     return render(request, 'formRegister.html')
 
 

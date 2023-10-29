@@ -14,7 +14,7 @@
 
 </style>
 
-<form class="vh-100" style="background-color: #eee;" method="POST" action="{% url 'main:register' %}">
+<form class="vh-100" style="background-color: #eee;" method="POST" action="" id="registration-form">
     {% csrf_token %}
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -81,5 +81,37 @@
       </div>
     </div>
   <form>
+
+  <!-- Tambahkan jQuery jika belum ada -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Tambahkan script Ajax untuk mengirim data registrasi -->
+  <script>
+  $(document).ready(function() {
+      $('#registration-form').submit(function(event) {
+          event.preventDefault();
+
+          // Ambil data dari formulir
+          var formData = $(this).serialize();
+
+          // Kirim data melalui Ajax
+          $.ajax({
+              url: '{% url "main:register" %}',
+              type: 'POST',
+              data: formData,
+              success: function(response) {
+                  if (response.success) {
+                      // Registrasi berhasil, Anda dapat mengarahkan pengguna ke halaman lain
+                      window.location.href = '{% url "main:landing" %}';
+                  } else {
+                      // Registrasi gagal, Anda dapat menampilkan pesan kesalahan
+                      alert('Registration failed. Please check the errors.');
+                  }
+              }
+          });
+      });
+  });
+  </script>
+
 
 {% endblock content %}
