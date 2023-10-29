@@ -24,7 +24,7 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                 // Do something with each item, for example, append it to a list
-                    $('#data-container').append('<li>ID: ' + item.fields.bookID + ', Name: ' + item.fields.title + '</li>');
+                    $('#data-container').append('<li>ID: ' + item.bookID + ', Name: ' + item.title + '</li>');
                 }
             },
             error: function(error) {
