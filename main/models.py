@@ -14,7 +14,7 @@ class Author(models.Model):
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     money = models.BigIntegerField()
-    role = models.CharField(max_length=10, choices=USER_ROLES)
+    role = models.CharField(max_length=20, default='Member')
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

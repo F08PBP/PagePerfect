@@ -164,8 +164,7 @@
             </h2>
             <h2>Search book:</h2>
             <div>
-                <input type="text" id="searchInput" placeholder="Search by Title">
-                <button onclick="searchBooks()">Search</button>
+                <input type="text" id="search_input" placeholder="Search by title">
             </div>
             
             <br>
@@ -192,7 +191,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="cartModalLabel">Your Shopping Cart</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -215,32 +214,34 @@
         return fetch("{% url 'member:show_books' %}").then((res) => res.json())
     }
 
+    const searchInput = document.getElementById("search_input");
+    searchInput.addEventListener("input", cardsBooks);
+
     async function cardsBooks() {
         document.getElementById("product_card").innerHTML = ""
         const products = await getProducts()
+        const searchInput = document.getElementById("search_input").value.toLowerCase(); // Get the search input value
+
         let htmlString = ''
         products.forEach((item) => {
-            if (item.pk <= 100 || item.fields.isInCatalog == true){
+            if ((item.pk <= 100 || item.fields.isInCatalog == true) &&
+                item.fields.title.toLowerCase().includes(searchInput)) {
                 htmlString += `
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.fields.title}</h5>
-                        <p class="card-text">Author : ${item.fields.authors}</p>
-                        <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                        <p class="card-text">Harga : ${item.fields.harga}</p>
-                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.fields.title}</h5>
+                            <p class="card-text">Author : ${item.fields.authors}</p>
+                            <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                            <p class="card-text">Harga : ${item.fields.harga}</p>
+                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                        </div>
                     </div>
-                </div>
                 `
             }
-            
         })
-        document.getElementById("product_card").innerHTML = htmlString
-    }
-    document.getElementById("keranjang-button").addEventListener("click", () => {
-        $('#cartModal').modal('show');
-    })
-    
+        document.getElementById("product_card").innerHTML = htmlString;
+    }   
+
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -276,39 +277,15 @@
         document.getElementById("reccomendations").innerHTML = htmlString;
     }
 
-    document.getElementById("searchInput").addEventListener("input", searchBooks);
+    document.getElementById("keranjang-button").addEventListener("click", () => {
+    $('#cartModal').modal('show');
+});
 
-function searchBooks() {
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const products = getProducts(); // Assuming getProducts fetches the data.
+    cardsBooks();
+    cardsRecc();
 
-    const filteredProducts = products.filter(item => {
-        const title = item.fields.title.toLowerCase();
-        return title.includes(searchInput);
-    });
-
-    displayBooks(filteredProducts);
-}
-
-function displayBooks(products) {
-    document.getElementById("contoh").innerHTML = "";
-    let htmlString = '';
     
-    products.forEach((item) => {
-        htmlString += `
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">${item.fields.title}</h5>
-                <p class="card-text">Author : ${item.fields.authors}</p>
-                <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                <p class="card-text">Harga : ${item.fields.harga}</p>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
-            </div>
-        </div>
-        `;
-    });
 
-    document.getElementById("contoh").innerHTML = htmlString;
-}
+</script>
 
-    cardsBooks().then(cardsRecc())
+</html>
