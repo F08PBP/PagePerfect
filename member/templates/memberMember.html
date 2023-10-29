@@ -141,10 +141,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'main:register' %}">Register</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'member:show_books_bought' %}">Books Bought</a>
@@ -156,34 +153,22 @@
     </header>
     <section class="landing-section landing-main">
         <div class="landing-section-content">
+            <div id="contoh" class="container_cards container card-container"></div>
             <h1 class="landing-main-text">
                 Welcome {{name}}
             </h1>
-            <h2>
-                Today's book reccomendations!
-            </h2>
-            <div class="carousel-container">
-                <button class="carousel-button" id="prev">&#8249;</button>
-                <div class="carousel-slide">
-                    <div class="card">
-                        <h2>Card 1</h2>
-                        <p>Description of Card 1.</p>
-                    </div>
-                    <div class="card">
-                        <h2>Card 2</h2>
-                        <p>Description of Card 2.</p>
-                    </div>
-                    <div class="card">
-                        <h2>Card 3</h2>
-                        <p>Description of Card 3.</p>
-                    </div>
-                </div>
-                <button class="carousel-button" id="next">&#8250;</button>
-            </div>
-            <br>
+            <h2>Here are some book reccomendations!</h2>
+            <div id="reccomendations" class="container_cards container card-container"></div>
             <h2>
                 Here are the books we have!
             </h2>
+            <h2>Search book:</h2>
+            <div>
+                <input type="text" id="searchInput" placeholder="Search by Title">
+                <button onclick="searchBooks()">Search</button>
+            </div>
+            
+            <br>
             <div id="product_card" class="container_cards container card-container"></div>
             <p class="landing-main-text">
             </p>
@@ -196,7 +181,6 @@
         </div>
     </section>
     <section class="landing-section-book">
-
     </section>
     
 </body>
@@ -212,7 +196,7 @@
         const products = await getProducts()
         let htmlString = ''
         products.forEach((item) => {
-            if (item.fields.bookID <= 200  || item.fields.isInCatalog == true){
+            if (item.pk <= 100 || item.fields.isInCatalog == true){
                 htmlString += `
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
@@ -221,38 +205,87 @@
                         <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
                         <p class="card-text">Harga : ${item.fields.harga}</p>
                         <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
-
                     </div>
                 </div>
                 `
             }
             
-
         })
         document.getElementById("product_card").innerHTML = htmlString
     }
 
-    cardsBooks()
-
-const prevButton = document.getElementById("prev");
-const nextButton = document.getElementById("next");
-const slide = document.querySelector(".carousel-slide");
-
-let counter = 0;
-
-nextButton.addEventListener("click", () => {
-    if (counter < 2) {
-        counter++;
-        slide.style.transform = `translateX(-${counter * 100}%)`;
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
-});
 
-prevButton.addEventListener("click", () => {
-    if (counter > 0) {
-        counter--;
-        slide.style.transform = `translateX(-${counter * 100}%)`;
+    async function cardsRecc() {
+        document.getElementById("reccomendations").innerHTML = "";
+        const cards = await getProducts();  // Assuming getProducts fetches the data.
+        let htmlString = '';
+
+        // Shuffle the cards array (randomize the order)
+        const shuffledCards = shuffleArray(cards);
+
+        // Display 4 random recommendations (or fewer if there are fewer items available)
+        const numRecommendations = 4;
+        for (let i = 0; i < numRecommendations && i < shuffledCards.length; i++) {
+            const item = shuffledCards[i];
+            htmlString += `
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${item.fields.title}</h5>
+                    <p class="card-text">Author: ${item.fields.authors}</p>
+                    <p class="card-text">Harga : ${item.fields.harga}</p>
+                </div>
+            </div>
+            `;
+        }
+
+        document.getElementById("reccomendations").innerHTML = htmlString;
     }
-});
+
+    document.getElementById("searchInput").addEventListener("input", searchBooks);
+
+function searchBooks() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const products = getProducts(); // Assuming getProducts fetches the data.
+
+    const filteredProducts = products.filter(item => {
+        const title = item.fields.title.toLowerCase();
+        return title.includes(searchInput);
+    });
+
+    displayBooks(filteredProducts);
+}
+
+function displayBooks(products) {
+    document.getElementById("contoh").innerHTML = "";
+    let htmlString = '';
+    
+    products.forEach((item) => {
+        htmlString += `
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${item.fields.title}</h5>
+                <p class="card-text">Author : ${item.fields.authors}</p>
+                <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                <p class="card-text">Harga : ${item.fields.harga}</p>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById("contoh").innerHTML = htmlString;
+}
+
+    cardsBooks().then(cardsRecc())
+
+
 
 </script>
 

@@ -39,17 +39,15 @@ def get_books_json(request):
     books_user = Book.objects.filter()
     return HttpResponse(serializers.serialize('json', books_user))
 
-# @login_required(login_url='/login')
-# def get_books_user(request, id):
-#     books_dibeli = Book.objects.filter(user=request.user)
 
 @login_required(login_url='/login')
 def show_books_bought(request):
-    member = Member.objects.get(user=request.user)
+    member = Member.objects.all().filter(user=request.user)[0]
+    books = member.books_bought
 
     context = {
         'name': request.user.username,
-        'books': member.books_bought,
+        'books':books
     }
 
     return render(request, "buku_dibeli.html", context)

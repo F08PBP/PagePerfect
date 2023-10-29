@@ -112,7 +112,6 @@
             <h2>
                 Here are the books you have bought!
             </h2>
-
             <div id="product_card" class="container_cards container card-container"></div>
             <p class="landing-main-text">
             </p>
@@ -131,8 +130,31 @@
 </body>
 
 <script>
-    
+    async function getProducts() {
+        return fetch("{% url 'member:show_books_bought' %}").then((res) => res.json())
+    }
 
+    async function cardsBooks() {
+        document.getElementById("product_card").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = ''
+        products.forEach((item) => {
+            htmlString += `
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${item.fields.user.username}</h5>
+                    <p class="card-text">Author : ${item.fields.authors}</p>
+                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                    <p class="card-text">Harga : ${item.fields.harga}</p>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                </div>
+            </div>
+            `
+        })
+        document.getElementById("product_card").innerHTML = htmlString
+    }   
+
+    cardsBooks()
 
 
 </script>
