@@ -96,14 +96,15 @@
                     <h5 class="card-title">${book.fields.title}</h5>
                     <p class="card-text">Author: ${book.fields.authors}</p>
                     <p class="card-text">Price: ${book.fields.harga}</p>
-                    <p class="card-text">Sold Amount: ${book.fields.jumlah_terjual}</p>
-                    <p class="card-text">Revenue: ${book.fields.jumlah_terjual * book.fields.harga}</p>
+                    <p class="card-text">Stock: ${book.fields.jumlah_buku}</p>
+                    <p class="card-text">Sold: ${book.fields.jumlah_terjual}</p>
                 </div>
             </div>`;
         });
         document.getElementById("product_cards").innerHTML = htmlString;
+        
     }
-    refreshBooks()
+      refreshBooks()
 </script>
 
 {% endblock content %}

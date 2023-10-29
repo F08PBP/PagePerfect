@@ -166,6 +166,27 @@
         return fetch("{% url 'writer:get_book_json' %}").then((res) => res.json())
     }
 
+    async function refreshBooks() {
+      document.getElementById("product_cards").innerHTML = "";
+      const books = await getBooks();
+      let htmlString = "";
+      books.forEach((book) => {
+          htmlString += `
+          <div class="card col-md-4">
+              <div class="card-body">
+                  <h5 class="card-title">${book.fields.title}</h5>
+                  <p class="card-text">Author: ${book.fields.authors}</p>
+                  <p class="card-text">Price: ${book.fields.harga}</p>
+                  <p class="card-text">Stock: ${book.fields.jumlah_buku}</p>
+                  <p class="card-text">Sold: ${book.fields.jumlah_terjual}</p>
+              </div>
+          </div>`;
+      });
+      document.getElementById("product_cards").innerHTML = htmlString;
+      
+  }
+  
+    refreshBooks()
     function addBook() {
       fetch("{% url 'writer:add_book_ajax' %}", {
           method: "POST",

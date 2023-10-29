@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseNotFound
 from book.models import Book
 from django.core import serializers
 # Create your views here.
-
 @csrf_exempt
 def add_book_ajax(request):
     if request.method == "POST":
