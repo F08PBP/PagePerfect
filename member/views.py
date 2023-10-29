@@ -18,18 +18,42 @@ from main.models import Member
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from member.forms import MessageForm
+from member.models import Message
+from random import randint
 
+def add_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            response = HttpResponseRedirect(reverse('member:show_main'))
+            return response
+    else:
+        form = MessageForm()
+    context = {'form': form, 'name': request.user.username}
+    return render(request, 'add_message.html', context)
 
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
     books = Book.objects.all()
     member = get_object_or_404(Member, user=request.user)
-    uang = member.money
+    uang = member.money    
+    messages = Message.objects.all()
+
+    if (messages.__len__() == 0):
+        random_message = "Keep on Reading - PerfectPage"
+
+    else :
+        random_index = randint(0, messages.__len__()-1)
+        random_message = messages[random_index]
+
     context = {
         'name': request.user.username,
         'books': books,
         'money': uang,
+        'message' : random_message,
     }
 
     return render(request, "memberMember.html", context)

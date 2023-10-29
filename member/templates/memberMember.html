@@ -16,9 +16,17 @@
 <body>
 
     <style>
+        .btn {
+        background-color: #3b5d81;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .btn:hover{
+        background-color: #0056b3;
+    }
 
         .landing-section-book{
-
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,6 +44,7 @@
         .landing-main { 
         background: url(https://basecamplive.com/wp-content/uploads/2023/02/books.jpeg) no-repeat center center fixed; 
         background-size: cover;
+        background-color: black;
         }
     
         .landing-section-content {
@@ -60,13 +69,13 @@
 
 
         .card {
-            border: 1px solid #ccc;
+            border: 1px solid #000000;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin: 10px;
             width: calc(33.33% - 20px); /* 3 item per baris */
-            background-color: #fff;
+            background-color: #90b4db;
         }
 
         .card-container {
@@ -82,53 +91,6 @@
             justify-content: center;
             margin: 28px;
         }
-
-        .carousel-container {
-    position: relative;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 600px;
-    overflow: hidden;
-}
-
-.carousel-slide {
-    display: flex;
-    width: 300%;
-    transition: transform 0.5s;
-}
-
-.card {
-    flex: 0 0 33.33%;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.card img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-#prev {
-    left: 0;
-}
-
-#next {
-    right: 0;
-}
-
     </style>
 
     <header class="header">
@@ -155,11 +117,18 @@
     <section class="landing-section landing-main">
         <div class="landing-section-content">
             <div id="contoh" class="container_cards container card-container"> </div>
-            <h1 class="landing-main-text">
+            <h1 class="landing-main-text" style="font-weight: bold; text-decoration: underline;">
                 Welcome {{name}}
             </h1>
             <h2> Jumlah saldo E-Wallet: <span id="money">{{ money }}</span></h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeMoneyModal">Top Up E-Wallet</button>
+            <h2>
+                Here is your motivational message:
+            </h2>
+            <h2 style="font-style: italic; font-weight: bold;">
+                {{message}}
+            </h2>
+            <br>
             <h2>Here are some book reccomendations!</h2>
             <div id="reccomendations" class="container_cards container card-container"></div>
             <h2>
@@ -182,6 +151,14 @@
             </div>
             <p class="landing-main-text">
             </p>
+
+            <h3>Feeling unmotivated to read? Lets make a motivational message!</h3>
+            <a href="{% url 'member:add_message' %}">
+                <button class="add-button">
+                    Make a message
+                </button>
+            </a>
+            <br>
             <h1>
                 <span class="brand">P</span>age
                 <span class="brand">P</span>erfect
@@ -240,8 +217,8 @@
                 item.fields.title.toLowerCase().includes(searchInput)) {
                 htmlString += `
                 <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.fields.title}</h5>
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title" style="font-weight: bold; text-decoration: underline;">${item.fields.title}</h5>
                         <p class="card-text">Author : ${item.fields.authors}</p>
                         <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
                         <p class="card-text">Harga : ${item.fields.harga}</p>
@@ -277,8 +254,8 @@
             const item = shuffledCards[i];
             htmlString += `
             <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">${item.fields.title}</h5>
+                <div class="card-body" style="text-align: center;">
+                    <h5 class="card-title" style="font-weight: bold; text-decoration: underline;">${item.fields.title}</h5>
                     <p class="card-text">Author: ${item.fields.authors}</p>
                     <p class="card-text">Harga : ${item.fields.harga}</p>
                 </div>
@@ -288,7 +265,7 @@
 
         document.getElementById("reccomendations").innerHTML = htmlString;
     }
-
+    
     async function getMoney() {
         return fetch("{% url 'member:get_money' %}").then((res) => res.json())
     }

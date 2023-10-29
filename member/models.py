@@ -20,3 +20,9 @@ class Order(models.Model):
         for buku in self.buku.all():
             total += buku.book.harga
         return total
+
+class Message(models.Model):
+    message = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.message
