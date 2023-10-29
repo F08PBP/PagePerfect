@@ -182,6 +182,11 @@
             </div>
 
             <div id="product_card" class="container_cards container card-container"></div>
+            <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+                <button id="keranjang-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </button>
+            </div>
             <p class="landing-main-text">
             </p>
             <h1>
@@ -193,9 +198,27 @@
         </div>
     </section>
     <section class="landing-section-book">
-
     </section>
-    
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Your Shopping Cart</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Here you can display the items in the shopping cart -->
+                    <!-- You can use a table, list, or any other format to show the cart contents -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -225,6 +248,11 @@
     }
 
     cardsBooks()
+
+    document.getElementById("keranjang-button").addEventListener("click", () => {
+        $('#cartModal').modal('show');
+    })
+
 
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
