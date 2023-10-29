@@ -147,16 +147,19 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'member:show_books_bought' %}">Books Bought</a>
                   </li>
                 </ul>
+
               </div>
             </div>
           </nav>
     </header>
     <section class="landing-section landing-main">
         <div class="landing-section-content">
-            <div id="contoh" class="container_cards container card-container"></div>
+            <div id="contoh" class="container_cards container card-container"> </div>
             <h1 class="landing-main-text">
                 Welcome {{name}}
             </h1>
+            <h2> Jumlah saldo E-Wallet: <span id="money">{{ money }}</span></h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeMoneyModal">Top Up E-Wallet</button>
             <h2>Here are some book reccomendations!</h2>
             <div id="reccomendations" class="container_cards container card-container"></div>
             <h2>
@@ -202,6 +205,29 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeMoneyModal" tabindex="-1" role="dialog" aria-labelledby="changeMoneyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeMoneyModalLabel">Change Money</h5>
+                    <button class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addMoneyForm">
+                        {% csrf_token %}
+                        <label for="newMoney">Masukkan Jumlah Uang:</label>
+                        <input type="number" id="newMoney" class="form-control" name="money" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" id="addMoneyButton">Tambah</button>
                 </div>
             </div>
         </div>
@@ -277,15 +303,60 @@
         document.getElementById("reccomendations").innerHTML = htmlString;
     }
 
+    async function getMoney() {
+        return fetch("{% url 'member:get_money' %}").then((res) => res.json())
+    }
+    async function refreshMoney() {
+        const money = await getMoney();
+        document.getElementById("money").innerHTML = money;
+    }
+
     document.getElementById("keranjang-button").addEventListener("click", () => {
     $('#cartModal').modal('show');
-});
+    });
+    
 
     cardsBooks();
     cardsRecc();
 
-    
 
+document.getElementById("addMoneyButton").addEventListener("click", () => {
+    const newMoney = parseFloat(document.getElementById("newMoney").value); // Parse input as a floating-point number
+    if (isNaN(newMoney)) {
+        alert("Please enter a valid number for the amount of money.");
+        return;
+    }
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    const data = new FormData();
+    data.append('newMoney', newMoney); // Append the newMoney value to the form data
+
+    fetch("{% url 'member:add_money' %}", {
+        method: "POST",
+        body: data,
+        headers: {
+            "X-CSRFToken": csrftoken,
+        },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.success) {
+            // Update the displayed money
+            const moneyDisplay = document.getElementById("money");
+            moneyDisplay.textContent = data.new_money.toFixed(2);
+            $('#changeMoneyModal').modal('hide');
+        } else {
+            alert(data.error);
+            console.log("masuk disini")
+        }
+    });
+
+    // Clear the input field
+    document.getElementById("newMoney").value = "";
+    $('#changeMoneyModal').modal('hide');
+});
+</script>
 </script>
 
 </html>

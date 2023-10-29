@@ -15,16 +15,21 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.core import serializers
 from main.models import Member
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
     books = Book.objects.all()
-
+    member = get_object_or_404(Member, user=request.user)
+    uang = member.money
     context = {
         'name': request.user.username,
         'books': books,
+        'money': uang,
     }
 
     return render(request, "memberMember.html", context)
@@ -51,3 +56,18 @@ def show_books_bought(request):
     }
 
     return render(request, "buku_dibeli.html", context)
+
+@login_required(login_url='/login')
+def get_money(request):
+    member = get_object_or_404(Member, user=request.user)
+    uang = member.money
+    return HttpResponse(uang)
+
+@csrf_exempt
+def add_money(request):
+    if request.method == 'POST':
+            new_money = int(request.POST.get('newMoney'))  # Get the new money amount from the request
+            member = get_object_or_404(Member, user=request.user)
+            member.money += new_money
+            member.save()
+            return JsonResponse({'success': True, 'new_money': member.money})

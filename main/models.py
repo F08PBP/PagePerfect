@@ -13,7 +13,7 @@ class Author(models.Model):
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    money = models.BigIntegerField()
+    money = models.BigIntegerField(default=100000)
     role = models.CharField(max_length=20, default='Member')
 
 class Employee(models.Model):
