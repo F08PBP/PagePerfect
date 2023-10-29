@@ -226,9 +226,6 @@
         document.getElementById("product_card").innerHTML = ""
         const products = await getProducts()
         const searchInput = document.getElementById("search_input").value.toLowerCase(); // Get the search input value
-
-        const searchInput = document.getElementById("search_input").value.toLowerCase(); // Get the search input value
-
         let htmlString = ''
         products.forEach((item) => {
             if (((item.pk <= 100 || item.fields.isInCatalog == true) &&

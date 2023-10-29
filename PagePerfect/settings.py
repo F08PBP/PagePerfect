@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'main',
     'book',
     'member',
-    'employee',
     'employee'
 ]
 
