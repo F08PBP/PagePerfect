@@ -11,5 +11,6 @@ urlpatterns = [
     path('create-product-ajax/', views.add_book_ajax, name="add_book_ajax"),
     path('show-collection/', views.show_collection, name="show_collection"),
     path('show-status-book/', views.show_status_book, name="show_status_book"),
-    path('show-revenue/', views.show_revenue, name="show_revenue")
+    path('show-revenue/', views.show_revenue, name="show_revenue"),
+    path('json/', views.show_json, name='show_json'),
 ]

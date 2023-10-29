@@ -17,7 +17,6 @@ def add_book_ajax(request):
         new_book = Book(title=title, authors=request.user.username, harga=harga, jumlah_buku=jumlah_buku, statusAccept='WAITING')
         new_book.save()
         return HttpResponse(b"CREATED", status=201)
-    
     return HttpResponseNotFound
 
 
@@ -65,3 +64,8 @@ def show_revenue(request):
         'total_revenue' : total_revenue
     }
     return render(request, 'show_revenue.html', context)
+
+
+def show_json(request):
+    data = Book.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
