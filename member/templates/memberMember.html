@@ -160,7 +160,7 @@
                 Welcome {{name}}
             </h1>
             <h2>
-                Here are the books we have!
+                Today's book reccomendations!
             </h2>
             <div class="carousel-container">
                 <button class="carousel-button" id="prev">&#8249;</button>
@@ -180,7 +180,10 @@
                 </div>
                 <button class="carousel-button" id="next">&#8250;</button>
             </div>
-
+            <br>
+            <h2>
+                Here are the books we have!
+            </h2>
             <div id="product_card" class="container_cards container card-container"></div>
             <p class="landing-main-text">
             </p>
@@ -209,17 +212,22 @@
         const products = await getProducts()
         let htmlString = ''
         products.forEach((item) => {
-            htmlString += `
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">${item.fields.title}</h5>
-                    <p class="card-text">Author : ${item.fields.authors}</p>
-                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+            if (item.fields.bookID <= 200  || item.fields.isInCatalog == true){
+                htmlString += `
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.fields.title}</h5>
+                        <p class="card-text">Author : ${item.fields.authors}</p>
+                        <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                        <p class="card-text">Harga : ${item.fields.harga}</p>
+                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
 
+                    </div>
                 </div>
-            </div>
-            `
+                `
+            }
+            
+
         })
         document.getElementById("product_card").innerHTML = htmlString
     }

@@ -43,7 +43,7 @@
     "pk": 3,
     "model": "book.Book",
     "fields": {
-      "bookID": 4,
+      "bookID": 3,
       "title": "Harry Potter and the Chamber of Secrets (Harry Potter  #2)",
       "authors": "J.K. Rowling",
       "average_rating": 4.42,
@@ -63,7 +63,7 @@
     "pk": 4,
     "model": "book.Book",
     "fields": {
-      "bookID": 5,
+      "bookID": 4,
       "title": "Harry Potter and the Prisoner of Azkaban (Harry Potter  #3)",
       "authors": "J.K. Rowling/Mary GrandPré",
       "average_rating": 4.56,
@@ -83,7 +83,7 @@
     "pk": 5,
     "model": "book.Book",
     "fields": {
-      "bookID": 8,
+      "bookID": 5,
       "title": "Harry Potter Boxed Set  Books 1-5 (Harry Potter  #1-5)",
       "authors": "J.K. Rowling/Mary GrandPré",
       "average_rating": 4.78,
@@ -103,7 +103,7 @@
     "pk": 6,
     "model": "book.Book",
     "fields": {
-      "bookID": 9,
+      "bookID": 6,
       "title": "Unauthorized Harry Potter Book Seven News: \"Half-Blood Prince\" Analysis and Speculation",
       "authors": "W. Frederick Zimmerman",
       "average_rating": 3.74,
@@ -123,7 +123,7 @@
     "pk": 7,
     "model": "book.Book",
     "fields": {
-      "bookID": 10,
+      "bookID": 7,
       "title": "Harry Potter Collection (Harry Potter  #1-6)",
       "authors": "J.K. Rowling",
       "average_rating": 4.73,
@@ -143,7 +143,7 @@
     "pk": 8,
     "model": "book.Book",
     "fields": {
-      "bookID": 12,
+      "bookID": 8,
       "title": "The Ultimate Hitchhiker's Guide: Five Complete Novels and One Story (Hitchhiker's Guide to the Galaxy  #1-5)",
       "authors": "Douglas Adams",
       "average_rating": 4.38,
@@ -163,7 +163,7 @@
     "pk": 9,
     "model": "book.Book",
     "fields": {
-      "bookID": 13,
+      "bookID": 9,
       "title": "The Ultimate Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy  #1-5)",
       "authors": "Douglas Adams",
       "average_rating": 4.38,
@@ -183,7 +183,7 @@
     "pk": 10,
     "model": "book.Book",
     "fields": {
-      "bookID": 14,
+      "bookID": 10,
       "title": "The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy  #1)",
       "authors": "Douglas Adams",
       "average_rating": 4.22,
@@ -203,7 +203,7 @@
     "pk": 11,
     "model": "book.Book",
     "fields": {
-      "bookID": 16,
+      "bookID": 11,
       "title": "The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy  #1)",
       "authors": "Douglas Adams/Stephen Fry",
       "average_rating": 4.22,
@@ -223,7 +223,7 @@
     "pk": 12,
     "model": "book.Book",
     "fields": {
-      "bookID": 18,
+      "bookID": 12,
       "title": "The Ultimate Hitchhiker's Guide (Hitchhiker's Guide to the Galaxy  #1-5)",
       "authors": "Douglas Adams",
       "average_rating": 4.38,
@@ -243,7 +243,7 @@
     "pk": 13,
     "model": "book.Book",
     "fields": {
-      "bookID": 21,
+      "bookID": 13,
       "title": "A Short History of Nearly Everything",
       "authors": "Bill Bryson",
       "average_rating": 4.21,
@@ -263,7 +263,7 @@
     "pk": 14,
     "model": "book.Book",
     "fields": {
-      "bookID": 22,
+      "bookID": 14,
       "title": "Bill Bryson's African Diary",
       "authors": "Bill Bryson",
       "average_rating": 3.44,
@@ -283,7 +283,7 @@
     "pk": 15,
     "model": "book.Book",
     "fields": {
-      "bookID": 23,
+      "bookID": 15,
       "title": "Bryson's Dictionary of Troublesome Words: A Writer's Guide to Getting It Right",
       "authors": "Bill Bryson",
       "average_rating": 3.87,
@@ -303,7 +303,7 @@
     "pk": 16,
     "model": "book.Book",
     "fields": {
-      "bookID": 24,
+      "bookID": 16,
       "title": "In a Sunburned Country",
       "authors": "Bill Bryson",
       "average_rating": 4.07,
@@ -323,7 +323,7 @@
     "pk": 17,
     "model": "book.Book",
     "fields": {
-      "bookID": 25,
+      "bookID": 17,
       "title": "I'm a Stranger Here Myself: Notes on Returning to America After Twenty Years Away",
       "authors": "Bill Bryson",
       "average_rating": 3.9,
@@ -343,7 +343,7 @@
     "pk": 18,
     "model": "book.Book",
     "fields": {
-      "bookID": 26,
+      "bookID": 18,
       "title": "The Lost Continent: Travels in Small Town America",
       "authors": "Bill Bryson",
       "average_rating": 3.83,
@@ -363,7 +363,7 @@
     "pk": 19,
     "model": "book.Book",
     "fields": {
-      "bookID": 27,
+      "bookID": 19,
       "title": "Neither Here nor There: Travels in Europe",
       "authors": "Bill Bryson",
       "average_rating": 3.86,
@@ -383,7 +383,7 @@
     "pk": 20,
     "model": "book.Book",
     "fields": {
-      "bookID": 28,
+      "bookID": 20,
       "title": "Notes from a Small Island",
       "authors": "Bill Bryson",
       "average_rating": 3.91,
@@ -403,7 +403,7 @@
     "pk": 21,
     "model": "book.Book",
     "fields": {
-      "bookID": 29,
+      "bookID": 21,
       "title": "The Mother Tongue: English and How It Got That Way",
       "authors": "Bill Bryson",
       "average_rating": 3.93,
@@ -423,7 +423,7 @@
     "pk": 22,
     "model": "book.Book",
     "fields": {
-      "bookID": 30,
+      "bookID": 22,
       "title": "J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings",
       "authors": "J.R.R. Tolkien",
       "average_rating": 4.59,
@@ -443,7 +443,7 @@
     "pk": 23,
     "model": "book.Book",
     "fields": {
-      "bookID": 31,
+      "bookID": 23,
       "title": "The Lord of the Rings (The Lord of the Rings  #1-3)",
       "authors": "J.R.R. Tolkien",
       "average_rating": 4.5,
@@ -463,7 +463,7 @@
     "pk": 24,
     "model": "book.Book",
     "fields": {
-      "bookID": 34,
+      "bookID": 24,
       "title": "The Fellowship of the Ring (The Lord of the Rings  #1)",
       "authors": "J.R.R. Tolkien",
       "average_rating": 4.36,
@@ -483,7 +483,7 @@
     "pk": 25,
     "model": "book.Book",
     "fields": {
-      "bookID": 35,
+      "bookID": 25,
       "title": "The Lord of the Rings (The Lord of the Rings  #1-3)",
       "authors": "J.R.R. Tolkien/Alan  Lee",
       "average_rating": 4.5,
@@ -503,7 +503,7 @@
     "pk": 26,
     "model": "book.Book",
     "fields": {
-      "bookID": 36,
+      "bookID": 26,
       "title": "The Lord of the Rings: Weapons and Warfare",
       "authors": "Chris   Smith/Christopher  Lee/Richard Taylor",
       "average_rating": 4.53,
@@ -523,7 +523,7 @@
     "pk": 27,
     "model": "book.Book",
     "fields": {
-      "bookID": 37,
+      "bookID": 27,
       "title": "The Lord of the Rings: Complete Visual Companion",
       "authors": "Jude Fisher",
       "average_rating": 4.5,
@@ -543,7 +543,7 @@
     "pk": 28,
     "model": "book.Book",
     "fields": {
-      "bookID": 45,
+      "bookID": 28,
       "title": "Agile Web Development with Rails: A Pragmatic Guide",
       "authors": "Dave Thomas/David Heinemeier Hansson/Leon Breedt/Mike Clark/Thomas  Fuchs/Andreas  Schwarz",
       "average_rating": 3.84,
@@ -563,7 +563,7 @@
     "pk": 29,
     "model": "book.Book",
     "fields": {
-      "bookID": 50,
+      "bookID": 29,
       "title": "Hatchet (Brian's Saga  #1)",
       "authors": "Gary Paulsen",
       "average_rating": 3.72,
@@ -583,7 +583,7 @@
     "pk": 30,
     "model": "book.Book",
     "fields": {
-      "bookID": 51,
+      "bookID": 30,
       "title": "Hatchet: A Guide for Using \"Hatchet\" in the Classroom",
       "authors": "Donna Ickes/Edward Sciranko/Keith Vasconcelles",
       "average_rating": 4,
@@ -603,7 +603,7 @@
     "pk": 31,
     "model": "book.Book",
     "fields": {
-      "bookID": 53,
+      "bookID": 31,
       "title": "Guts: The True Stories behind Hatchet and the Brian Books",
       "authors": "Gary Paulsen",
       "average_rating": 3.88,
@@ -623,7 +623,7 @@
     "pk": 32,
     "model": "book.Book",
     "fields": {
-      "bookID": 54,
+      "bookID": 32,
       "title": "Molly Hatchet - 5 of the Best",
       "authors": "Molly Hatchet",
       "average_rating": 4.33,
@@ -643,7 +643,7 @@
     "pk": 33,
     "model": "book.Book",
     "fields": {
-      "bookID": 55,
+      "bookID": 33,
       "title": "Hatchet Jobs: Writings on Contemporary Fiction",
       "authors": "Dale Peck",
       "average_rating": 3.45,
@@ -663,7 +663,7 @@
     "pk": 34,
     "model": "book.Book",
     "fields": {
-      "bookID": 57,
+      "bookID": 34,
       "title": "A Changeling for All Seasons (Changeling Seasons #1)",
       "authors": "Angela Knight/Sahara Kelly/Judy Mays/Marteeka Karland/Kate Douglas/Shelby Morgen/Lacey Savage/Kate Hill/Willa Okati",
       "average_rating": 3.76,
@@ -683,7 +683,7 @@
     "pk": 35,
     "model": "book.Book",
     "fields": {
-      "bookID": 58,
+      "bookID": 35,
       "title": "Changeling (Changeling  #1)",
       "authors": "Delia Sherman",
       "average_rating": 3.6,
@@ -703,7 +703,7 @@
     "pk": 36,
     "model": "book.Book",
     "fields": {
-      "bookID": 59,
+      "bookID": 36,
       "title": "The Changeling Sea",
       "authors": "Patricia A. McKillip",
       "average_rating": 4.06,
@@ -723,7 +723,7 @@
     "pk": 37,
     "model": "book.Book",
     "fields": {
-      "bookID": 61,
+      "bookID": 37,
       "title": "The Changeling",
       "authors": "Zilpha Keatley Snyder",
       "average_rating": 4.17,
@@ -743,7 +743,7 @@
     "pk": 38,
     "model": "book.Book",
     "fields": {
-      "bookID": 63,
+      "bookID": 38,
       "title": "The Changeling",
       "authors": "Kate Horsley",
       "average_rating": 3.55,
@@ -763,7 +763,7 @@
     "pk": 39,
     "model": "book.Book",
     "fields": {
-      "bookID": 66,
+      "bookID": 39,
       "title": "The Changeling (Daughters of England  #15)",
       "authors": "Philippa Carr",
       "average_rating": 3.98,
@@ -783,7 +783,7 @@
     "pk": 40,
     "model": "book.Book",
     "fields": {
-      "bookID": 67,
+      "bookID": 40,
       "title": "The Known World",
       "authors": "Edward P. Jones",
       "average_rating": 3.83,
@@ -803,7 +803,7 @@
     "pk": 41,
     "model": "book.Book",
     "fields": {
-      "bookID": 68,
+      "bookID": 41,
       "title": "The Known World",
       "authors": "Edward P. Jones/Kevin R. Free",
       "average_rating": 3.83,
@@ -823,7 +823,7 @@
     "pk": 42,
     "model": "book.Book",
     "fields": {
-      "bookID": 69,
+      "bookID": 42,
       "title": "The Known World",
       "authors": "Edward P. Jones",
       "average_rating": 3.83,
@@ -843,7 +843,7 @@
     "pk": 43,
     "model": "book.Book",
     "fields": {
-      "bookID": 71,
+      "bookID": 43,
       "title": "Traders  Guns & Money: Knowns and Unknowns in the Dazzling World of Derivatives",
       "authors": "Satyajit Das",
       "average_rating": 3.83,
@@ -863,7 +863,7 @@
     "pk": 44,
     "model": "book.Book",
     "fields": {
-      "bookID": 72,
+      "bookID": 44,
       "title": "Artesia: Adventures in the Known World",
       "authors": "Mark Smylie",
       "average_rating": 4.13,
@@ -883,7 +883,7 @@
     "pk": 45,
     "model": "book.Book",
     "fields": {
-      "bookID": 74,
+      "bookID": 45,
       "title": "The John McPhee Reader (John McPhee Reader  #1)",
       "authors": "John McPhee/William Howarth",
       "average_rating": 4.42,
@@ -903,7 +903,7 @@
     "pk": 46,
     "model": "book.Book",
     "fields": {
-      "bookID": 75,
+      "bookID": 46,
       "title": "Uncommon Carriers",
       "authors": "John McPhee",
       "average_rating": 3.95,
@@ -923,7 +923,7 @@
     "pk": 47,
     "model": "book.Book",
     "fields": {
-      "bookID": 76,
+      "bookID": 47,
       "title": "Heirs of General Practice",
       "authors": "John McPhee",
       "average_rating": 4.17,
@@ -943,7 +943,7 @@
     "pk": 48,
     "model": "book.Book",
     "fields": {
-      "bookID": 77,
+      "bookID": 48,
       "title": "The Control of Nature",
       "authors": "John McPhee",
       "average_rating": 4.24,
@@ -963,7 +963,7 @@
     "pk": 49,
     "model": "book.Book",
     "fields": {
-      "bookID": 78,
+      "bookID": 49,
       "title": "Annals of the Former World",
       "authors": "John McPhee",
       "average_rating": 4.34,
@@ -983,7 +983,7 @@
     "pk": 50,
     "model": "book.Book",
     "fields": {
-      "bookID": 79,
+      "bookID": 50,
       "title": "Coming Into the Country",
       "authors": "John McPhee",
       "average_rating": 4.22,
@@ -1003,7 +1003,7 @@
     "pk": 51,
     "model": "book.Book",
     "fields": {
-      "bookID": 80,
+      "bookID": 51,
       "title": "La Place de la Concorde Suisse",
       "authors": "John McPhee",
       "average_rating": 3.92,
@@ -1023,7 +1023,7 @@
     "pk": 52,
     "model": "book.Book",
     "fields": {
-      "bookID": 81,
+      "bookID": 52,
       "title": "Giving Good Weight",
       "authors": "John McPhee",
       "average_rating": 4.23,
@@ -1043,7 +1043,7 @@
     "pk": 53,
     "model": "book.Book",
     "fields": {
-      "bookID": 83,
+      "bookID": 53,
       "title": "Rising from the Plains",
       "authors": "John McPhee",
       "average_rating": 4.23,
@@ -1063,7 +1063,7 @@
     "pk": 54,
     "model": "book.Book",
     "fields": {
-      "bookID": 85,
+      "bookID": 54,
       "title": "The Heidi Chronicles",
       "authors": "Wendy Wasserstein",
       "average_rating": 3.75,
@@ -1083,7 +1083,7 @@
     "pk": 55,
     "model": "book.Book",
     "fields": {
-      "bookID": 86,
+      "bookID": 55,
       "title": "The Heidi Chronicles: Uncommon Women and Others & Isn't It Romantic",
       "authors": "Wendy Wasserstein",
       "average_rating": 3.84,
@@ -1103,7 +1103,7 @@
     "pk": 56,
     "model": "book.Book",
     "fields": {
-      "bookID": 89,
+      "bookID": 56,
       "title": "Active Literacy Across the Curriculum: Strategies for Reading  Writing  Speaking  and Listening",
       "authors": "Heidi Hayes Jacobs",
       "average_rating": 3.94,
@@ -1123,7 +1123,7 @@
     "pk": 57,
     "model": "book.Book",
     "fields": {
-      "bookID": 90,
+      "bookID": 57,
       "title": "Simply Beautiful Beaded Jewelry",
       "authors": "Heidi Boyd",
       "average_rating": 3.77,
@@ -1143,7 +1143,7 @@
     "pk": 58,
     "model": "book.Book",
     "fields": {
-      "bookID": 91,
+      "bookID": 58,
       "title": "Always Enough: God's Miraculous Provision Among the Poorest Children on Earth",
       "authors": "Heidi Baker/Rolland Baker",
       "average_rating": 4.46,
@@ -1163,7 +1163,7 @@
     "pk": 59,
     "model": "book.Book",
     "fields": {
-      "bookID": 92,
+      "bookID": 59,
       "title": "Mapping the Big Picture: Integrating Curriculum & Assessment K-12",
       "authors": "Heidi Hayes Jacobs",
       "average_rating": 3.68,
@@ -1183,7 +1183,7 @@
     "pk": 60,
     "model": "book.Book",
     "fields": {
-      "bookID": 93,
+      "bookID": 60,
       "title": "Heidi (Heidi  #1-2)",
       "authors": "Johanna Spyri/Beverly Cleary/Angelo  Rinaldi",
       "average_rating": 3.99,
@@ -1203,7 +1203,7 @@
     "pk": 61,
     "model": "book.Book",
     "fields": {
-      "bookID": 94,
+      "bookID": 61,
       "title": "Getting Results with Curriculum Mapping",
       "authors": "Heidi Hayes Jacobs",
       "average_rating": 3.25,
@@ -1223,7 +1223,7 @@
     "pk": 62,
     "model": "book.Book",
     "fields": {
-      "bookID": 96,
+      "bookID": 62,
       "title": "There's Always Enough: The Miraculous Move of God in Mozambique",
       "authors": "Rolland Baker/Heidi Baker",
       "average_rating": 4.46,
@@ -1243,7 +1243,7 @@
     "pk": 63,
     "model": "book.Book",
     "fields": {
-      "bookID": 98,
+      "bookID": 63,
       "title": "What to Expect the First Year (What to Expect)",
       "authors": "Heidi Murkoff/Sharon Mazel/Arlene Eisenberg/Sandee Hathaway/Mark D. Widome",
       "average_rating": 3.89,
@@ -1263,7 +1263,7 @@
     "pk": 64,
     "model": "book.Book",
     "fields": {
-      "bookID": 99,
+      "bookID": 64,
       "title": "The Player's Handbook: The Ultimate Guide on Dating and Relationships",
       "authors": "Heidi Fleiss/Libby Keatinge",
       "average_rating": 3.82,
@@ -1283,7 +1283,7 @@
     "pk": 65,
     "model": "book.Book",
     "fields": {
-      "bookID": 100,
+      "bookID": 65,
       "title": "Simply Beautiful Beading: 53 Quick and Easy Projects",
       "authors": "Heidi Boyd",
       "average_rating": 3.78,
@@ -1303,7 +1303,7 @@
     "pk": 66,
     "model": "book.Book",
     "fields": {
-      "bookID": 103,
+      "bookID": 66,
       "title": "God Emperor of Dune (Dune Chronicles  #4)",
       "authors": "Frank Herbert",
       "average_rating": 3.84,
@@ -1323,7 +1323,7 @@
     "pk": 67,
     "model": "book.Book",
     "fields": {
-      "bookID": 105,
+      "bookID": 67,
       "title": "Chapterhouse: Dune (Dune Chronicles #6)",
       "authors": "Frank Herbert",
       "average_rating": 3.91,
@@ -1343,7 +1343,7 @@
     "pk": 68,
     "model": "book.Book",
     "fields": {
-      "bookID": 106,
+      "bookID": 68,
       "title": "Dune Messiah (Dune Chronicles #2)",
       "authors": "Frank Herbert",
       "average_rating": 3.88,
@@ -1363,7 +1363,7 @@
     "pk": 69,
     "model": "book.Book",
     "fields": {
-      "bookID": 107,
+      "bookID": 69,
       "title": "Dreamer of Dune: The Biography of Frank Herbert",
       "authors": "Brian Herbert",
       "average_rating": 4.01,
@@ -1383,7 +1383,7 @@
     "pk": 70,
     "model": "book.Book",
     "fields": {
-      "bookID": 109,
+      "bookID": 70,
       "title": "Heretics of Dune (Dune Chronicles  #5)",
       "authors": "Frank Herbert",
       "average_rating": 3.86,
@@ -1403,7 +1403,7 @@
     "pk": 71,
     "model": "book.Book",
     "fields": {
-      "bookID": 110,
+      "bookID": 71,
       "title": "The Road to Dune",
       "authors": "Frank Herbert/Brian Herbert/Kevin J. Anderson",
       "average_rating": 3.88,
@@ -1423,7 +1423,7 @@
     "pk": 72,
     "model": "book.Book",
     "fields": {
-      "bookID": 117,
+      "bookID": 72,
       "title": "Heretics of Dune (Dune Chronicles #5)",
       "authors": "Frank Herbert",
       "average_rating": 3.86,
@@ -1443,7 +1443,7 @@
     "pk": 73,
     "model": "book.Book",
     "fields": {
-      "bookID": 119,
+      "bookID": 73,
       "title": "The Lord of the Rings: The Art of the Fellowship of the Ring",
       "authors": "Gary Russell",
       "average_rating": 4.59,
@@ -1463,7 +1463,7 @@
     "pk": 74,
     "model": "book.Book",
     "fields": {
-      "bookID": 122,
+      "bookID": 74,
       "title": "The Power of One (The Power of One  #1)",
       "authors": "Bryce Courtenay",
       "average_rating": 4.35,
@@ -1483,7 +1483,7 @@
     "pk": 75,
     "model": "book.Book",
     "fields": {
-      "bookID": 123,
+      "bookID": 75,
       "title": "The Power of One (The Power of One  #1)",
       "authors": "Bryce Courtenay",
       "average_rating": 4.35,
@@ -1503,7 +1503,7 @@
     "pk": 76,
     "model": "book.Book",
     "fields": {
-      "bookID": 129,
+      "bookID": 76,
       "title": "The Power of One: One Person  One Rule  One Month",
       "authors": "John C. Maxwell/Stephen R. Graves/Thomas G. Addington",
       "average_rating": 4.28,
@@ -1523,7 +1523,7 @@
     "pk": 77,
     "model": "book.Book",
     "fields": {
-      "bookID": 130,
+      "bookID": 77,
       "title": "Power of an Hour: Business and Life Mastery in One Hour a Week",
       "authors": "Dave Lakhani",
       "average_rating": 3.34,
@@ -1543,7 +1543,7 @@
     "pk": 78,
     "model": "book.Book",
     "fields": {
-      "bookID": 131,
+      "bookID": 78,
       "title": "The Power of One: The Solo Play for Playwrights  Actors  and Directors",
       "authors": "Louis E. Catron",
       "average_rating": 3.67,
@@ -1563,7 +1563,7 @@
     "pk": 79,
     "model": "book.Book",
     "fields": {
-      "bookID": 132,
+      "bookID": 79,
       "title": "How to Buy  Sell & Profit on eBay: Kick-Start Your Home-Based Business in Just Thirty Days",
       "authors": "Adam Ginsberg",
       "average_rating": 3.48,
@@ -1583,7 +1583,7 @@
     "pk": 80,
     "model": "book.Book",
     "fields": {
-      "bookID": 133,
+      "bookID": 80,
       "title": "eBay for Dummies",
       "authors": "Marsha Collier",
       "average_rating": 3.5,
@@ -1603,7 +1603,7 @@
     "pk": 81,
     "model": "book.Book",
     "fields": {
-      "bookID": 135,
+      "bookID": 81,
       "title": "What to Sell on ebay and Where to Get It: The Definitive Guide to Product Sourcing for eBay and Beyond",
       "authors": "Chris Malta/Lisa Suttora",
       "average_rating": 3.62,
@@ -1623,7 +1623,7 @@
     "pk": 82,
     "model": "book.Book",
     "fields": {
-      "bookID": 137,
+      "bookID": 82,
       "title": "Starting an eBay Business for Dummies",
       "authors": "Marsha Collier",
       "average_rating": 3.55,
@@ -1643,7 +1643,7 @@
     "pk": 83,
     "model": "book.Book",
     "fields": {
-      "bookID": 138,
+      "bookID": 83,
       "title": "eBay: Top 100 Simplified Tips & Tricks",
       "authors": "Julia Wilkinson",
       "average_rating": 4.27,
@@ -1663,7 +1663,7 @@
     "pk": 84,
     "model": "book.Book",
     "fields": {
-      "bookID": 139,
+      "bookID": 84,
       "title": "ebay Timesaving Techniques for Dummies",
       "authors": "Marsha Collier",
       "average_rating": 3.39,
@@ -1683,7 +1683,7 @@
     "pk": 85,
     "model": "book.Book",
     "fields": {
-      "bookID": 140,
+      "bookID": 85,
       "title": "eBay Business All-in-One Desk Reference for Dummies",
       "authors": "Marsha Collier",
       "average_rating": 3.89,
@@ -1703,7 +1703,7 @@
     "pk": 86,
     "model": "book.Book",
     "fields": {
-      "bookID": 141,
+      "bookID": 86,
       "title": "Ruby Cookbook",
       "authors": "Lucas Carlson/Leonard Richardson",
       "average_rating": 3.84,
@@ -1723,7 +1723,7 @@
     "pk": 87,
     "model": "book.Book",
     "fields": {
-      "bookID": 142,
+      "bookID": 87,
       "title": "Ruby Ann's Down Home Trailer Park Cookbook",
       "authors": "Ruby Ann Boxcar",
       "average_rating": 4.12,
@@ -1743,7 +1743,7 @@
     "pk": 88,
     "model": "book.Book",
     "fields": {
-      "bookID": 144,
+      "bookID": 88,
       "title": "Ruby Ann's Down Home Trailer Park BBQin' Cookbook",
       "authors": "Ruby Ann Boxcar",
       "average_rating": 4.08,
@@ -1763,7 +1763,7 @@
     "pk": 89,
     "model": "book.Book",
     "fields": {
-      "bookID": 147,
+      "bookID": 89,
       "title": "Rails Cookbook: Recipes for Rapid Web Development with Ruby",
       "authors": "Rob Orsini",
       "average_rating": 3.48,
@@ -1783,7 +1783,7 @@
     "pk": 90,
     "model": "book.Book",
     "fields": {
-      "bookID": 151,
+      "bookID": 90,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/Richard Pevear/Larissa Volokhonsky",
       "average_rating": 4.05,
@@ -1803,7 +1803,7 @@
     "pk": 91,
     "model": "book.Book",
     "fields": {
-      "bookID": 152,
+      "bookID": 91,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/David Magarshack/Priscilla Meyer",
       "average_rating": 4.05,
@@ -1823,7 +1823,7 @@
     "pk": 92,
     "model": "book.Book",
     "fields": {
-      "bookID": 153,
+      "bookID": 92,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/Richard Pevear/Larissa Volokhonsky/John Bayley",
       "average_rating": 4.05,
@@ -1843,7 +1843,7 @@
     "pk": 93,
     "model": "book.Book",
     "fields": {
-      "bookID": 154,
+      "bookID": 93,
       "title": "CliffsNotes on Tolstoy's Anna Karenina",
       "authors": "Marianne Sturman/Leo Tolstoy",
       "average_rating": 3.85,
@@ -1863,7 +1863,7 @@
     "pk": 94,
     "model": "book.Book",
     "fields": {
-      "bookID": 155,
+      "bookID": 94,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/Amy Mandelker/Constance Garnett",
       "average_rating": 4.05,
@@ -1883,7 +1883,7 @@
     "pk": 95,
     "model": "book.Book",
     "fields": {
-      "bookID": 156,
+      "bookID": 95,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/Louise Maude/Aylmer Maude",
       "average_rating": 4.05,
@@ -1903,7 +1903,7 @@
     "pk": 96,
     "model": "book.Book",
     "fields": {
-      "bookID": 157,
+      "bookID": 96,
       "title": "Anna Karenina",
       "authors": "Leo Tolstoy/Constance Garnett/Amy Mandelker",
       "average_rating": 4.05,
@@ -1923,7 +1923,7 @@
     "pk": 97,
     "model": "book.Book",
     "fields": {
-      "bookID": 159,
+      "bookID": 97,
       "title": "Dinner with Anna Karenina",
       "authors": "Gloria Goldreich",
       "average_rating": 2.99,
@@ -1943,7 +1943,7 @@
     "pk": 98,
     "model": "book.Book",
     "fields": {
-      "bookID": 160,
+      "bookID": 98,
       "title": "Tolstoy: Anna Karenina",
       "authors": "Anthony Thorlby",
       "average_rating": 4.19,
@@ -1963,7 +1963,7 @@
     "pk": 99,
     "model": "book.Book",
     "fields": {
-      "bookID": 162,
+      "bookID": 99,
       "title": "Untouchable",
       "authors": "Mulk Raj Anand/E.M. Forster",
       "average_rating": 3.71,
@@ -1983,7 +1983,7 @@
     "pk": 100,
     "model": "book.Book",
     "fields": {
-      "bookID": 163,
+      "bookID": 100,
       "title": "The Untouchable",
       "authors": "John Banville",
       "average_rating": 3.95,
