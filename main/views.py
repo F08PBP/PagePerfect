@@ -46,7 +46,7 @@ def login_user(request):
                 elif role == 'Writer':
                     return redirect('main:show_mainWriter')
                 else:
-                    return redirect('main:show_mainEmployee')
+                    return redirect('employee:main')
             else :
                 return redirect('main:landing')
             
@@ -81,14 +81,6 @@ def register(request):
     return render(request, 'formRegister.html')
 
 
-@login_required(login_url='/login')
-def show_mainMember(request):
-
-    context = {
-        'name': request.user.username,
-    }
-
-    return render(request, "mainMember.html", context)
 
 @login_required(login_url='/login')
 def show_mainWriter(request):
@@ -101,8 +93,17 @@ def show_mainWriter(request):
 
 @login_required(login_url='/login')
 def show_mainEmployee(request):
-    return redirect('employee:employee_page')
+    return redirect('employee:main')
 
+@login_required(login_url='/login')
+def show_mainMember(request):
+
+    context = {
+        'name': request.user.username,
+    }
+
+    return render(request, "mainMember.html", context)
+  
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:landing'))
@@ -110,4 +111,3 @@ def logout_user(request):
 
 
 
-#Buat Commit

@@ -7,7 +7,7 @@ from book.models import Book
 
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     revenue = models.BigIntegerField(default=0)
     role = models.CharField(max_length=20, default='Writer')
 
@@ -18,7 +18,7 @@ class Member(models.Model):
     buku_dibeli = models.ManyToManyField(Book, blank=True)
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, default='Employee')
 
 

@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('harga', models.IntegerField(blank=True, null=True)),
                 ('jumlah_buku', models.IntegerField(blank=True, null=True)),
                 ('jumlah_terjual', models.IntegerField(blank=True, default=0)),
-                ('statusAccept', models.CharField(choices=[('ACCEPT', 'Accept'), ('WAITING', 'Waiting'), ('DENIED', 'Denied'), ('NO STATUS', 'No Status')], default='NO STATUS', max_length=10)),
+                ('statusAccept', models.CharField(choices=[('ACCEPT', 'Accept'), ('WAITING', 'Waiting'), ('DENIED', 'Denied')], default='WAITING', max_length=10)),
                 ('isInCatalog', models.BooleanField(default=False)),
             ],
         ),
