@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 from book.models import Book
 from django.http import HttpResponse
 from django.core import serializers
+from .serializers import BookSerializer
+
+from .models import Catalog
+
+import json
 
 # Create your views here.
 
@@ -31,6 +36,10 @@ def accBookFromWriter(request):
             instance = Book.objects.get(bookID=book_id)
             instance.statusAccept = "ACCEPT"
             instance.save()
+
+            catalog= Catalog.objects.create(
+                 book=instance,
+            )
             return HttpResponse({'status': 'The book ' + instance.title + ' was accepted'} , status=200)
         except Book.DoesNotExist:
             return HttpResponse({'status': 'Error: Object not found'}, status=404)
@@ -49,11 +58,48 @@ def denBookFromWriter(request):
     return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
 def catalogBook(request):
-    data = Book.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    data = Catalog.objects.all()
+    catalog_data = []
+    for entry in data:
+        book = Book.objects.filter(bookID = entry.book.bookID).all()
+        for book_instance in book:
+            catalog_data.append({
+                'Catalog' : entry.pk,
+                'isShow' : entry.isShowToMember,
+                'bookID': book_instance.bookID,
+                'title': book_instance.title,
+                'authors' : book_instance.authors,
+                'average_rating' : book_instance.average_rating,
+                # Include other fields you want to serialize
+            })
+
+    json_data = json.dumps(list(catalog_data))
+
+    return HttpResponse(json_data, content_type="application/json")
+
+def showingToMember(request):
+    if request.method == 'POST' :
+        catalog_id = request.POST.get('catalog_id')
+        try:
+            instance = Catalog.objects.filter(pk= catalog_id).update(isShowToMember=True)
+            return HttpResponse({'status': 'The book ' + ' was showed'} , status=200)
+        except Book.DoesNotExist:
+            return HttpResponse({'status': 'Error: Object not found'}, status=404)
+    return HttpResponse({'status': 'Error: Invalid request'}, status=400)
+
+def notShowingToMember(request):
+    if request.method == 'POST' :
+        catalog_id = request.POST.get('catalog_id')
+        try:
+            instance = Catalog.objects.filter(pk= catalog_id).update(isShowToMember=False)
+            return HttpResponse({'status': 'The book ' + ' was not showed'} , status=200)
+        except Book.DoesNotExist:
+            return HttpResponse({'status': 'Error: Object not found'}, status=404)
+    return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
 def getBook(request, book_id):
     data = Book.objects.filter(bookID = book_id).all()
+    print(data)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def bookFromWriter(request):
@@ -65,5 +111,5 @@ def setBook(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def test(request):
-    data = Book.objects.filter(bookID = 55).all()
+    data = Catalog.objects.filter(isShowToMember = True).all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")

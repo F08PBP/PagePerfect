@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import main, catalogBook, bookFromWriter, test, getBook, mainBook, mainBookFromWriter, mainSetBook, setBook, accBookFromWriter, denBookFromWriter
+from .views import main, catalogBook, bookFromWriter, test, getBook, mainBook, mainBookFromWriter, mainSetBook, setBook, accBookFromWriter, denBookFromWriter, showingToMember, notShowingToMember
 
 app_name = 'employee'
 
@@ -14,5 +14,7 @@ urlpatterns = [
     path('api/set', setBook, name='setBook'),
     path('acceptBook', accBookFromWriter, name='acceptBook'),
     path('deniedBook', denBookFromWriter, name='deniedBook'),
+    path('show', showingToMember, name='showingToMember'),
+    path('notshow', notShowingToMember, name='notShowingToMember'),
     path('test', test, name='test'),
 ]
