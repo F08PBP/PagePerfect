@@ -113,3 +113,7 @@ def setBook(request):
 def test(request):
     data = Catalog.objects.filter(isShowToMember = True).all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+# Tambahan buat bisa akses employee.html dari views.py di main
+def employee_page(request):
+    return render(request, 'employee.html')

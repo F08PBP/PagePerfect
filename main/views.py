@@ -99,12 +99,7 @@ def show_mainWriter(request):
 
 @login_required(login_url='/login')
 def show_mainEmployee(request):
-
-    context = {
-        'name': request.user.username,
-    }
-
-    return render(request, "mainEmployee.html", context)
+    return redirect('employee:employee_page')
 
 def logout_user(request):
     logout(request)
