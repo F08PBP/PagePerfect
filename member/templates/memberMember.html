@@ -16,7 +16,7 @@
 <body>
 
     <style>
-        .btn {
+    .btn_add {
         background-color: #3b5d81;
         color: #fff;
         cursor: pointer;
@@ -28,7 +28,13 @@
         cursor: pointer;
     }
 
-    .btn:hover{
+    .btn_message:hover {
+        background-color: #3b5d81;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .btn_add:hover{
         background-color: #0056b3;
     }
 
@@ -149,7 +155,7 @@
             </h2>
             <h2>Search book:</h2>
             <div>
-                <input type="text" id="searchInput" placeholder="Search by Title">
+                <input type="text" id="searchInput" placeholder="Search by Title" style="text-align: center;">
                 <button onclick="searchBooks()">Search</button>
             </div>
             
@@ -167,7 +173,7 @@
 
             <h3>Feeling unmotivated to read? Lets make a motivational message!</h3>
             <a href="{% url 'member:add_message' %}">
-                <button class="btn">
+                <button class="btn_message btn">
                     Make a message
                 </button>
             </a>
@@ -235,7 +241,7 @@
                         <p class="card-text">Author : ${item.fields.authors}</p>
                         <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
                         <p class="card-text">Harga : ${item.fields.harga}</p>
-                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                        <button type="button" class="btn_add btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
                     </div>
                 </div>
                 `
