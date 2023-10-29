@@ -1,38 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Perfect</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-<h1>Set Book</h1>
-<div id="data-container">
+{% extends 'base.html' %}
+{% load static %}
     
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>ACTIVE BOOK</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container-show'>
+                        </tbody>
+                      </table>
+                </div>   
 </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>NOT ACTIVE BOOK</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container-not-show'>
+                        </tbody>
+                      </table>
+                </div>   
+</div>
+    </div>
 
 <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: 'api/set',  
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                // Handle the returned data here
-
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
-                // Do something with each item, for example, append it to a list
-                    $('#data-container').append('<li>ID: ' + item.fields.bookID + ', Name: ' + item.fields.title + '</li>');
-                }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+    function Back() {
+            window.history.back();
+        }
+    function attachUnshow(catalogID) {
+    $.ajax({
+        type: 'POST',
+        url: 'notshow',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            catalog_id: catalogID
+        },
+        success: function(response){
+            location.reload();
+        },
+        error: function(){
+            console.error('Failed to perform POST request.');
+        }
     });
-</script>
+}
 
-</body>
-</html>
+function attachshow(catalogID) {
+    $.ajax({
+        type: 'POST',
+        url: 'show',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            catalog_id: catalogID
+        },
+        success: function(response){
+            location.reload();
+        },
+        error: function(){
+            console.error('Failed to perform POST request.');
+        }
+    });
+}
+    $(document).ready(function() {
+    $.ajax({
+        url: 'api/catalog',  
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                
+                if(item.isShow){
+                    $('#data-container-show').append(
+                        "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                        "<td>" + item.title + "</td>" +
+                        "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                        "<td><button class=\"btn btn-success\" onclick=\"attachUnshow(" + item.Catalog + ")\">UNSHOWN</button></td>" +
+                        "</tr>"
+                    );
+                } else {
+                    $('#data-container-not-show').append(
+                        "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                        "<td>" + item.title + "</td>" +
+                        "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                        "<td><button class=\"btn btn-success\" onclick=\"attachshow(" + item.Catalog + ")\">SHOW</button></td>" +
+                        "</tr>"
+                    );
+                }
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+});
+
+
+
+</script>
+{% endblock %}

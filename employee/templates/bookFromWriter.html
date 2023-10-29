@@ -1,18 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Perfect</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-<h1>Book From Writer</h1>
-<div id="data-container">
+
+{% extends 'base.html' %}
+{% load static %}
+    
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>Book From Writer</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container'>
+                        </tbody>
+                      </table>
+                </div>
+        
+
     
 </div>
+    </div>
 
 <script>
+    function Back() {
+            window.history.back();
+        }
+
+    function acceptBook(bookID) {
+    $.ajax({
+        type: 'POST',
+        url: 'acceptBook',  // Replace with your actual POST URL endpoint
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            book_id: bookID
+        },
+        success: function(response) {
+            console.log('The book was accepted');
+            location.reload();
+        },
+        error: function() {
+            console.error('Failed to perform POST request.');
+        }
+    });
+}
+
+    function denyBook(bookID) {
+    $.ajax({
+        type: 'POST',
+        url: 'deniedBook',  // Replace with your actual POST URL endpoint
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            book_id: bookID
+        },
+        success: function(response) {
+            console.log('The book was denied');
+            location.reload();
+        },
+        error: function() {
+            console.error('Failed to perform POST request.');
+        }
+    });
+}
     $(document).ready(function() {
         $.ajax({
             url: 'api/acc',  
@@ -71,9 +131,19 @@
                         });
                     });
                 // Do something with each item, for example, append it to a list
-                    $('#data-container').append('<li>ID: ' + item.fields.bookID + 
-                        ', Name: ' + item.fields.title + 
-                        '</li>', buttonA, buttonD);
+
+                    $('#data-container').append(
+                    "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                            "<td>" + item.fields.title + "</td>" +
+
+                            "<td> <a class=\"btn btn-primary\" href=\"book/" + item.fields.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                            "<td><button class=\"btn btn-success\" onclick=\"acceptBook(" + item.fields.bookID + ")\">ACCEPT</button></td>" +
+                            "<td><button class=\"btn btn-danger\" onclick=\"denyBook(" + item.fields.bookID + ")\">DENIED</button></td>" +
+                            "</tr>"
+                          );
+                
+            
                 }
             },
             error: function(error) {
@@ -82,6 +152,4 @@
         });
     });
 </script>
-
-</body>
-</html>
+{% endblock %}
