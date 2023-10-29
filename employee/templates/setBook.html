@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+    
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>ACTIVE BOOK</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container-show'>
+                        </tbody>
+                      </table>
+                </div>   
+</div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>NOT ACTIVE BOOK</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container-not-show'>
+                        </tbody>
+                      </table>
+                </div>   
+</div>
+    </div>
+
+<script>
+    function Back() {
+            window.history.back();
+        }
+    function attachUnshow(catalogID) {
+    $.ajax({
+        type: 'POST',
+        url: 'notshow',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            catalog_id: catalogID
+        },
+        success: function(response){
+            location.reload();
+        },
+        error: function(){
+            console.error('Failed to perform POST request.');
+        }
+    });
+}
+
+function attachshow(catalogID) {
+    $.ajax({
+        type: 'POST',
+        url: 'show',
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            catalog_id: catalogID
+        },
+        success: function(response){
+            location.reload();
+        },
+        error: function(){
+            console.error('Failed to perform POST request.');
+        }
+    });
+}
+    $(document).ready(function() {
+    $.ajax({
+        url: 'api/catalog',  
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                
+                if(item.isShow){
+                    $('#data-container-show').append(
+                        "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                        "<td>" + item.title + "</td>" +
+                        "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                        "<td><button class=\"btn btn-success\" onclick=\"attachUnshow(" + item.Catalog + ")\">UNSHOWN</button></td>" +
+                        "</tr>"
+                    );
+                } else {
+                    $('#data-container-not-show').append(
+                        "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                        "<td>" + item.title + "</td>" +
+                        "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                        "<td><button class=\"btn btn-success\" onclick=\"attachshow(" + item.Catalog + ")\">SHOW</button></td>" +
+                        "</tr>"
+                    );
+                }
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+});
+
+
+
+</script>
+{% endblock %}
