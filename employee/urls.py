@@ -5,7 +5,7 @@ from .views import main, catalogBook, bookFromWriter, test, getBook, mainBook, m
 app_name = 'employee'
 
 urlpatterns = [
-    path('', main, name='main'),
+    path('main', main, name='main'),
     path('catalog', mainCatalog, name='catalog'),
     path('set-book', mainSetBook, name='mainSetBook'),
     path('book-from-writer', mainBookFromWriter, name='mainBookFromWriter'),
@@ -19,5 +19,4 @@ urlpatterns = [
     path('show', showingToMember, name='showingToMember'),
     path('notshow', notShowingToMember, name='notShowingToMember'),
     path('test', test, name='test'),
-    path('employee_page/', employee_page, name='employee_page'),
 ]

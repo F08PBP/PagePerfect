@@ -6,6 +6,7 @@ from django.core import serializers
 from .serializers import BookSerializer
 
 from .models import Catalog
+from main.models import Employee
 
 import json
 
@@ -14,26 +15,54 @@ import json
 
 #@login_required(login_url='login')
 
+@login_required(login_url='/login')
 def main(request):
-    response = {}
-    return render(request, 'employee.html', response)
+    try :
+        employee = Employee.objects.get(user=request.user.id)
+        response = {
+            "name" : request.user.username
+        }
+        return render(request, 'employee.html', response)
+    except : 
+        return render(request, 'failed.html')
 
+@login_required(login_url='/login')
 def mainCatalog(request):
-    response = {}
-    return render(request, 'catalog.html', response)
+    try :
+        employee = Employee.objects.get(user=request.user.id)
+        response = {}
+        return render(request, 'catalog.html', response)
+    except : 
+        return render(request, 'failed.html')
 
+@login_required(login_url='/login')
 def mainBook(request, book_id):
-    response = {"book_id" : book_id}
-    return render(request, 'book.html', response)
+    try :
+        employee = Employee.objects.get(user=request.user.id)
+        response = {"book_id" : book_id}
+        return render(request, 'book.html', response)
+    except : 
+        return render(request, 'failed.html')
 
+@login_required(login_url='/login')
 def mainSetBook(request):
-    response = {}
-    return render(request, 'setBook.html', response)
+    try :
+        employee = Employee.objects.get(user=request.user.id)
+        response = {}
+        return render(request, 'setBook.html', response)
+    except : 
+        return render(request, 'failed.html')
 
+@login_required(login_url='/login')
 def mainBookFromWriter(request):
-    response = {}
-    return render(request, 'bookFromWriter.html', response)
+    try :
+        employee = Employee.objects.get(user=request.user.id)
+        response = {}
+        return render(request, 'bookFromWriter.html', response)
+    except : 
+        return render(request, 'failed.html')
 
+@login_required(login_url='/login')
 def accBookFromWriter(request):
     if request.method == 'POST' :
         book_id = request.POST.get('book_id')
@@ -50,6 +79,7 @@ def accBookFromWriter(request):
             return HttpResponse({'status': 'Error: Object not found'}, status=404)
     return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
+@login_required(login_url='/login')
 def denBookFromWriter(request):
     if request.method == 'POST' :
         book_id = request.POST.get('book_id')
@@ -62,6 +92,7 @@ def denBookFromWriter(request):
             return HttpResponse({'status': 'Error: Object not found'}, status=404)
     return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
+@login_required(login_url='/login')
 def catalogBook(request):
     data = Catalog.objects.all()
     catalog_data = []
@@ -84,6 +115,7 @@ def catalogBook(request):
 
     return HttpResponse(json_data, content_type="application/json")
 
+@login_required(login_url='/login')
 def showingToMember(request):
     if request.method == 'POST' :
         catalog_id = request.POST.get('catalog_id')
@@ -94,6 +126,7 @@ def showingToMember(request):
             return HttpResponse({'status': 'Error: Object not found'}, status=404)
     return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
+@login_required(login_url='/login')
 def notShowingToMember(request):
     if request.method == 'POST' :
         catalog_id = request.POST.get('catalog_id')
@@ -104,19 +137,23 @@ def notShowingToMember(request):
             return HttpResponse({'status': 'Error: Object not found'}, status=404)
     return HttpResponse({'status': 'Error: Invalid request'}, status=400)
 
+@login_required(login_url='/login')
 def getBook(request, book_id):
     data = Book.objects.filter(bookID = book_id).all()
     print(data)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+@login_required(login_url='/login')
 def bookFromWriter(request):
     data = Book.objects.filter(statusAccept = "WAITING").all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+@login_required(login_url='/login')
 def setBook(request):
     data = Book.objects.filter(statusAccept = "ACCEPT").all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+@login_required(login_url='/login')
 def test(request):
     data = Catalog.objects.filter(isShowToMember = True).all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
