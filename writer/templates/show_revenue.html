@@ -3,7 +3,10 @@
 {% block content %}
 
 <style>
-    h2 {text-align: center;}
+    h2 {
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
 
     #total_amount {
         color : rgb(255, 89, 0);
@@ -23,6 +26,7 @@
         gap: 20px;
     }
     .card {
+        text-align: center;
         margin: 5px;
         width: 395px; 
         height: 300px; 
@@ -34,7 +38,7 @@
     .card-title {
         font-size: 24px; /* Title font size */
         color: #333; /* Title text color */
-        font-family: 'Arial', sans-serif; /* Title font family */
+        font-family: 'Times New Roman', sans-serif; /* Title font family */
     }
 
     .card-text {
@@ -54,24 +58,24 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a href = "{% url 'main:show_mainWriter' %}">
-                    <button type="button" class="btn btn-info btn-sm">Main Page</button>
+                    <button type="button" class="btn btn-info btn-sm" style="margin-left: 10px;">Main Page</button>
                 </a>
                 <a href = "{% url 'writer:show_collection' %}">
-                    <button type="button" class="btn btn-success btn-sm">Book Library</button>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-left: 10px;">Creation Library</button>
                 </a>
                 <a href = "{% url 'writer:show_status_book' %}">
-                    <button type="button" class="btn btn-warning btn-sm">Book Status</button>
+                    <button type="button" class="btn btn-warning btn-sm" style="margin-left: 10px;">Book Status</button>
                 </a>
                 <a href="{% url 'main:logout' %}">
-                    <button type="button" class="btn btn-warning" style="margin-left: 10px;">Logout</button>
+                    <button type="button" class="btn btn-danger btn-sm" style="margin-left: 10px;">Logout</button>
                 </a>
             </div>
         </div>
     </div>
 </nav>
-
-<h2>{{ total_revenue }}</h2>
-
+<br>
+<h2>Your Revenue : {{ total_revenue }}</h2>
+<br>
 <div class="card-container">
     <div class='row' id="product_cards"></div>
 </div>
@@ -90,9 +94,10 @@
             <div class="card col-md-4">
                 <div class="card-body">
                     <h5 class="card-title">${book.fields.title}</h5>
-                    <p class="card-text">${book.fields.harga}</p>
-                    <p class="card-text">${book.fields.jumlah_terjual}</p>
-                    <p class="card-text">${book.fields.jumlah_terjual * book.fields.harga}</p>
+                    <p class="card-text">Author: ${book.fields.authors}</p>
+                    <p class="card-text">Price: ${book.fields.harga}</p>
+                    <p class="card-text">Sold Amount: ${book.fields.jumlah_terjual}</p>
+                    <p class="card-text">Revenue: ${book.fields.jumlah_terjual * book.fields.harga}</p>
                 </div>
             </div>`;
         });

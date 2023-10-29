@@ -41,6 +41,10 @@
     color: #1768BE;
     }
 
+    .container{
+      text-align: center;
+    }
+
     .brand-text {
     color: #1768BE;
     }
@@ -70,7 +74,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a href="{% url 'main:logout' %}">
-                    <button type="button" class="btn btn-warning" style="margin-left: 10px;">Logout</button>
+                    <button type="button" class="btn btn-danger" style="margin-left: 10px;">Logout</button>
                 </a>
             </div>
         </div>
@@ -109,35 +113,53 @@
   </div>
 </div>
 
+<br>
+
 <div class="container">
   <h2>What are you gonna do?</h2>
-  <div class="one">
-    <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">Publish Your Creation</button>
-    <a href="{% url 'writer:show_collection' %}">
-      <button type="button"class="btn btn-outline-secondary btn-block">View Your Personal Creation</button>
-    </a>
-    <a href="{% url 'writer:show_status_book' %}">
-      <button type="button"class="btn btn-warning btn-block">View Your Status Creation Feedback</button> 
-    </a>
-    <a href="{% url 'writer:show_revenue' %}">
-      <button type="button"class="btn btn-success btn-block">View Your Treasury</button>
-    </a>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Publish Your Creation</h5>
+          <p class="card-text">Click to publish your work</p>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Publish</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View Your Personal Creation</h5>
+          <p class="card-text">Click to view your published work</p>
+          <a href="{% url 'writer:show_collection' %}" class="btn btn-info">View</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View Your Status Creation Feedback</h5>
+          <p class="card-text">Click to view the status of your work</p>
+          <a href="{% url 'writer:show_status_book' %}" class="btn btn-warning">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">View Your Treasury</h5>
+          <p class="card-text">See your earnings and treasury</p>
+          <a href="{% url 'writer:show_revenue' %}" class="btn btn-success">View</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<section class="landing-section landing-main">
-  <div class="landing-section-content">
-      <h1>
-          <span class="brand">P</span>age
-          <span class="brand">P</span>erfect
-      </h1>
-      <p class="landing-main-text">
-          Got tired of missing out on releases from your favourite artists?
-          <br>
-          You have found a perfect solution...
-      </p>
-  </div>
-</section>
 
 <script>
     async function getBooks() {
@@ -148,13 +170,13 @@
       fetch("{% url 'writer:add_book_ajax' %}", {
           method: "POST",
           body: new FormData(document.querySelector('#form'))
-      }).then(refreshProducts)
+      }).then(refreshBooks)
 
       document.getElementById("form").reset()
       return false
     }
 
-    document.getElementById("button_add").onclick = addProduct
+    document.getElementById("button_add").onclick = addBook
 
 </script>
 {% endblock content %}
