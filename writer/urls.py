@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_main = 'writer'
+app_name = 'writer'
 
 urlpatterns = [
     path('get-product/', views.get_book_json, name="get_book_json"),
