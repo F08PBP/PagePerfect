@@ -1,18 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Perfect</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-<h1>Main Catalog</h1>
-<div id="data-container">
+
+{% extends 'base.html' %}
+{% load static %}
+    
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>Main Catalog</h1>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Sold</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody id ='data-container'>
+                        </tbody>
+                      </table>
+                </div>
+        
+
     
 </div>
+    </div>
+
 
 <script>
+    function Back() {
+            window.history.back();
+        }
     $(document).ready(function() {
         $.ajax({
             url: 'api/catalog',  
@@ -24,7 +49,17 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                 // Do something with each item, for example, append it to a list
-                    $('#data-container').append('<li>ID: ' + item.bookID + ', Name: ' + item.title + '</li>');
+                $('#data-container').append(
+                    "<tr>" +
+                        "<th scope=\"row\">" + (i+1) + "</th>" +
+                            "<td>" + item.title + "</td>" +
+                            "<td>" + item.jumlah_buku + "</td>" +
+                            "<td>" + item.jumlah_terjual + "</td>" +
+
+                            "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                          "</tr>"
+                          );
+                
                 }
             },
             error: function(error) {
@@ -33,6 +68,4 @@
         });
     });
 </script>
-
-</body>
-</html>
+{% endblock %}

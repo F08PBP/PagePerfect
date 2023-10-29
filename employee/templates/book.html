@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Perfect</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-<h1>Book</h1>
-<div id="data-container">
+{% extends 'base.html' %}
+{% load static %}
     
-</div>
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div id="data-container">
+            
+        </div>
+        
+    </div>
+
 
 <script>
+    function Back() {
+            window.history.back();
+        }
     $(document).ready(function() {
         var id = '{{ book_id }}'
         $.ajax({
@@ -25,9 +30,55 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                 // Do something with each item, for example, append it to a list
-                    $('#data-container').append('<li>ID: ' + item.fields.bookID + 
-                        ', Name: ' + item.fields.title + 
-                        '</li>');
+                    $('#data-container').append(
+                        "<div class=\"row\">" +
+                        "<div class=\"col-12 text-center\">" +
+                        "<h1>" + item.fields.title + "</h1>" +
+                        "</div>" + 
+                        "<table class=\"table\"> " +
+                        "<thead>"+
+                          "<tr>" +
+                            "<th scope=\"col\"></th> " +
+                            "<th scope=\"col\"></th> " +
+                          "</tr> " + 
+                        "</thead> " +
+                        "<tbody id> " +
+                            "<tr>" +
+                                "<th scope=\"row\">Author</th>" +
+                            "<td>" + item.fields.authors + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Price</th>" +
+                            "<td>" + item.fields.harga + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Rating</th>" +
+                            "<td>" + item.fields.average_rating + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">ISBN</th>" +
+                            "<td>" + item.fields.isbn + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Language</th>" +
+                            "<td>" + item.fields.language_code + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Num Pages</th>" +
+                            "<td>" + item.fields.num_pages + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Publication Date</th>" +
+                            "<td>" + item.fields.publication_date + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Publisher</th>" +
+                            "<td>" + item.fields.publisher + "</td>" +
+                          "</tr>" +
+                        "</tbody> " +
+                      "</table>"
+                        
+                        );
                 }
             },
             error: function(error) {
@@ -36,6 +87,4 @@
         });
     });
 </script>
-
-</body>
-</html>
+{% endblock %}
