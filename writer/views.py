@@ -26,6 +26,21 @@ def get_book_json(request):
     return HttpResponse(serializers.serialize('json', books_item))
 
 
+def get_acc_book_json(request):
+    acc_books_item = Book.objects.all().filter(authors=request.user.username).filter(statusAccept='ACCEPT')
+    return HttpResponse(serializers.serialize('json', acc_books_item))
+
+
+def get_waiting_book_json(request):
+    waiting_books_item = Book.objects.all().filter(authors=request.user.username).filter(statusAccept='WAITING')
+    return HttpResponse(serializers.serialize('json', waiting_books_item))
+
+
+def get_denied_book_json(request):
+    denied_books_item = Book.objects.all().filter(authors=request.user.username).filter(statusAccept='DENIED')
+    return HttpResponse(serializers.serialize('json', denied_books_item))
+
+
 def show_collection(request):
     context = {
         'name' : request.user.username,
