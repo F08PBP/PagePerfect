@@ -51,6 +51,15 @@ def show_main(request):
 
     return render(request, "mainMember.html", context)
 
+@login_required(login_url='/login')
+def show_mainWriter(request):
+
+    context = {
+        'name': request.user.username,
+    }
+
+    return render(request, "mainWriter.html", context)
+
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:landing'))

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .row {
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            margin: 5px;
+            width: 395px; 
+            height: 300px; 
+            background-color: #f5f5f5; /* Background color */
+            border: 1px solid #ddd; /* Border color */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift effect */
+        }
+        .card-title {
+            font-size: 24px; /* Title font size */
+            color: #333; /* Title text color */
+            font-family: 'Arial', sans-serif; /* Title font family */
+        }
+
+        .card-text {
+            font-size: 16px; /* Text font size */
+            color: #555; /* Text color */
+            font-family: 'Arial', sans-serif; /* Text font family */
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+              <a class="navbar-brand" href="#">{{ name }}</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a href = "{% url 'main:show_mainWriter' %}">
+                        <button type="button" class="btn btn-info btn-sm">Main Page</button>
+                    </a>
+                    <a href = "{% url 'writer:show_status_book' %}">
+                        <button type="button" class="btn btn-success btn-sm">Book Status</button>
+                    </a>
+                    <a href = "{% url 'writer:show_revenue' %}">
+                        <button type="button" class="btn btn-warning btn-sm">Book Revenue</button>
+                    </a>
+                    <a href="{% url 'main:logout_user' %}">
+                        <button type="button" class="btn btn-warning" style="margin-left: 10px;">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="card-container">
+        <div class='row' id="product_cards"></div>
+    </div>
+
+    <section class="landing-section landing-main">
+        <div class="landing-section-content">
+            <h1>
+                <span class="brand">P</span>age
+                <span class="brand">P</span>erfect
+            </h1>
+            <p class="landing-main-text">
+                Got tired of missing out on releases from your favourite artists?
+                <br>
+                You have found a perfect solution...
+            </p>
+        </div>
+      </section>
+
+    <script>
+        async function getBooks() {
+            return fetch("{% url 'writer:get_book_json' %}").then((res) => res.json())
+        }
+
+        async function refreshBooks() {
+            document.getElementById("product_cards").innerHTML = "";
+            const books = await getBooks();
+            let htmlString = "";
+            books.forEach((book) => {
+                htmlString += `
+                <div class="card col-md-4">
+                    <div class="card-body">
+                        <h5 class="card-title">${book.fields.title}</h5>
+                        <p class="card-text">${book.fields.authors}</p>
+                        <p class="card-text">${book.fields.harga}</p>
+                        <p class="card-text">${book.fields.jumlah_buku}</p>
+                        <p class="card-text">${book.fields.jumlah_terjual}</p>
+                    </div>
+                </div>`;
+            });
+            document.getElementById("product_cards").innerHTML = htmlString;
+            
+        }
+        refreshBooks()
+
+    </script>
+
+{% endblock content %}

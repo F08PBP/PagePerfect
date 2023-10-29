@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    h2 {
+        text-align: center;
+    }
+    .landing-section-book{
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }        
+
+    .landing-section {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    }
+
+    .landing-main { 
+    background: url(https://basecamplive.com/wp-content/uploads/2023/02/books.jpeg) no-repeat center center fixed; 
+    background-size: cover;
+    }
+
+    .landing-section-content {
+    padding: 2rem;
+    background: rgba(0,0,0,0.5);
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #ccc;
+    }
+
+    .brand {
+    margin: 0;
+    color: #1768BE;
+    }
+
+    .brand-text {
+    color: #1768BE;
+    }
+
+    div.one {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+    #judul {
+      color : rgb(128, 0, 113);
+      font-size: 40px;
+      font-weight: bold;
+      font-style: italic;
+  }
+
+</style>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+          <a class="navbar-brand" href="#">{{ name }}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a href="{% url 'main:logout_user' %}">
+                    <button type="button" class="btn btn-warning" style="margin-left: 10px;">Logout</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="form" onsubmit="return false;">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                      <label for="title" class="col-form-label">Title:</label>
+                      <input type="text" class="form-control" id="title" name="title" ></input>
+                  </div>
+                  <div class="mb-3">
+                      <label for="harga" class="col-form-label">Harga:</label>
+                      <input type="number" class="form-control" id="harga" name="harga"></input>
+                  </div>
+                  <div class="mb-3">
+                    <label for="jumlah_buku" class="col-form-label">Jumlah Buku:</label>
+                    <input type="number" class="form-control" id="jumlah_buku" name="jumlah_buku"></input>
+                </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <h2>What are you gonna do?</h2>
+  <div class="one">
+    <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">Publish Your Creation</button>
+    <a href="{% url 'writer:show_collection' %}">
+      <button type="button"class="btn btn-outline-secondary btn-block">View Your Personal Creation</button>
+    </a>
+    <a href="{% url 'writer:show_status_book' %}">
+      <button type="button"class="btn btn-warning btn-block">View Your Status Creation Feedback</button> 
+    </a>
+    <a href="{% url 'writer:show_revenue' %}">
+      <button type="button"class="btn btn-success btn-block">View Your Treasury</button>
+    </a>
+  </div>
+</div>
+
+<section class="landing-section landing-main">
+  <div class="landing-section-content">
+      <h1>
+          <span class="brand">P</span>age
+          <span class="brand">P</span>erfect
+      </h1>
+      <p class="landing-main-text">
+          Got tired of missing out on releases from your favourite artists?
+          <br>
+          You have found a perfect solution...
+      </p>
+  </div>
+</section>
+
+<script>
+    async function getBooks() {
+        return fetch("{% url 'writer:get_book_json' %}").then((res) => res.json())
+    }
+
+    function addBook() {
+      fetch("{% url 'writer:add_book_ajax' %}", {
+          method: "POST",
+          body: new FormData(document.querySelector('#form'))
+      }).then(refreshProducts)
+
+      document.getElementById("form").reset()
+      return false
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+
+</script>
+
+{% endblock content %}
