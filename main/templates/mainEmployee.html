@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <h1>Main Employee</h1>
+
+    <h5 class = "nama">Name:</h5>
+    <p>{{name}}</p>
+
+    <h5>Class:</h5>
+    <p>{{class}}</p>
+
+    <a href="{% url 'main:logout' %}">
+        <button>
+            Logout
+        </button>
+    </a>
+
+{% endblock content %}
