@@ -71,3 +71,29 @@ def add_money(request):
             member.money += new_money
             member.save()
             return JsonResponse({'success': True, 'new_money': member.money})
+    
+
+def get_pesanan(request):
+    member = get_object_or_404(Member, user=request.user)
+    pesanan = member.pesanan
+    return HttpResponse(pesanan)
+
+@login_required(login_url='/login')
+def tambah_ke_keranjang(request, **kwargs):
+    member = get_object_or_404(Member, user=request.user)
+    book = Book.objects.filter(id=kwargs.get('item_id', "")).first()
+    if book in request.user.member.buku_dibeli.all():
+        messages.info(request, 'Book is already in your cart')
+        return redirect(reverse('member:show_main'))
+
+def shopping_cart(request):
+    books = Book.objects.all()
+    member = get_object_or_404(Member, user=request.user)
+    uang = member.money
+    context = {
+        'name': request.user.username,
+        'books': books,
+        'money': uang,
+    }
+
+    return render(request, "shopping_cart.html", context)

@@ -15,6 +15,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     money = models.BigIntegerField(default=100000)
     role = models.CharField(max_length=20, default='Member')
+    buku_dibeli = models.ManyToManyField(Book, blank=True)
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

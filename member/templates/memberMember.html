@@ -173,9 +173,11 @@
             <br>
             <div id="product_card" class="container_cards container card-container"></div>
             <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-                <button id="keranjang-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
-                    <i class="fas fa-shopping-cart"></i> Cart
-                </button>
+                <a href="{% url 'member:shopping_cart' %}">
+                    <button id="keranjang-button" class="btn btn-primary">
+                        <i class="fas fa-shopping-cart"></i> Cart
+                    </button>
+                </a>
             </div>
             <p class="landing-main-text">
             </p>
@@ -189,26 +191,6 @@
     </section>
     <section class="landing-section-book">
     </section>
-    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">Your Shopping Cart</h5>
-                    <button class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Here you can display the items in the shopping cart -->
-                    <!-- You can use a table, list, or any other format to show the cart contents -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Checkout</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="changeMoneyModal" tabindex="-1" role="dialog" aria-labelledby="changeMoneyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -259,7 +241,7 @@
                             <p class="card-text">Author : ${item.fields.authors}</p>
                             <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
                             <p class="card-text">Harga : ${item.fields.harga}</p>
-                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" onclick="addToCart('${ item.fields.pk }')">Add Book to Cart</button>
                         </div>
                     </div>
                 `
@@ -311,10 +293,6 @@
         document.getElementById("money").innerHTML = money;
     }
 
-    document.getElementById("keranjang-button").addEventListener("click", () => {
-    $('#cartModal').modal('show');
-    });
-    
 
     cardsBooks();
     cardsRecc();
@@ -356,6 +334,22 @@ document.getElementById("addMoneyButton").addEventListener("click", () => {
     document.getElementById("newMoney").value = "";
     $('#changeMoneyModal').modal('hide');
 });
+function addToCart(item_id) {
+    $.ajax({
+        url: '/tambah_ke_keranjang/',  // URL for adding items to the cart
+        type: 'POST',
+        data: {
+            'item_id': item_id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function(response) {
+            tambah_ke_keranjang(response);
+        },
+        error: function(xhr, status, error) {
+            // Handle error response
+        }
+    });
+}
 </script>
 </script>
 
