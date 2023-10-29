@@ -6,8 +6,7 @@ class Book(models.Model):
     STATUS_CHOICES = [
         ("ACCEPT", 'Accept'),
         ("WAITING", 'Waiting'),
-        ("DENIED", 'Denied'),
-        ("NO STATUS", 'No Status'),
+        ("DENIED", 'Denied')
     ]
     bookID = models.IntegerField(null=True, blank=True)
     title = models.TextField(null=True, blank=True)
@@ -24,5 +23,5 @@ class Book(models.Model):
     harga = models.IntegerField(null=True, blank=True)
     jumlah_buku = models.IntegerField(null=True, blank=True)
     jumlah_terjual = models.IntegerField(default=0, blank=True)
-    statusAccept = models.CharField(max_length=10, choices=STATUS_CHOICES, default="NO STATUS")
+    statusAccept = models.CharField(max_length=10, choices=STATUS_CHOICES, default="WAITING")
     isInCatalog = models.BooleanField(default=False)
