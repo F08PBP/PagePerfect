@@ -13,7 +13,12 @@ import json
 
 
 #@login_required(login_url='login')
+
 def main(request):
+    response = {}
+    return render(request, 'employee.html', response)
+
+def mainCatalog(request):
     response = {}
     return render(request, 'catalog.html', response)
 
@@ -70,6 +75,8 @@ def catalogBook(request):
                 'title': book_instance.title,
                 'authors' : book_instance.authors,
                 'average_rating' : book_instance.average_rating,
+                'jumlah_buku' : book_instance.jumlah_buku,
+                'jumlah_terjual' : book_instance.jumlah_terjual
                 # Include other fields you want to serialize
             })
 

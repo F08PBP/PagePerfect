@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import main, catalogBook, bookFromWriter, test, getBook, mainBook, mainBookFromWriter, mainSetBook, setBook, accBookFromWriter, denBookFromWriter, showingToMember, notShowingToMember
+from .views import main, catalogBook, bookFromWriter, test, getBook, mainBook, mainBookFromWriter, mainSetBook, setBook, accBookFromWriter, denBookFromWriter, showingToMember, notShowingToMember, mainCatalog
 
 app_name = 'employee'
 
 urlpatterns = [
     path('', main, name='main'),
+    path('catalog', mainCatalog, name='catalog'),
     path('set-book', mainSetBook, name='mainSetBook'),
     path('book-from-writer', mainBookFromWriter, name='mainBookFromWriter'),
     path('book/<int:book_id>', mainBook, name='bookFromWriter'),
