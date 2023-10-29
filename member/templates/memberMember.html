@@ -167,7 +167,8 @@
             </h2>
             <h2>Search book:</h2>
             <div>
-                <input type="text" id="search_input" placeholder="Search by title">
+                <input type="text" id="searchInput" placeholder="Search by Title">
+                <button onclick="searchBooks()">Search</button>
             </div>
             
             <br>
@@ -230,20 +231,23 @@
         const products = await getProducts()
         const searchInput = document.getElementById("search_input").value.toLowerCase(); // Get the search input value
 
+        const searchInput = document.getElementById("search_input").value.toLowerCase(); // Get the search input value
+
         let htmlString = ''
         products.forEach((item) => {
-            if ((item.pk <= 100 || item.fields.isInCatalog == true) &&
+            if (((item.pk <= 100 || item.fields.isInCatalog == true) &&
+                item.fields.title.toLowerCase().includes(searchInput))  &&
                 item.fields.title.toLowerCase().includes(searchInput)) {
                 htmlString += `
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">${item.fields.title}</h5>
-                            <p class="card-text">Author : ${item.fields.authors}</p>
-                            <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                            <p class="card-text">Harga : ${item.fields.harga}</p>
-                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" onclick="addToCart('${ item.fields.pk }')">Add Book to Cart</button>
-                        </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.fields.title}</h5>
+                        <p class="card-text">Author : ${item.fields.authors}</p>
+                        <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                        <p class="card-text">Harga : ${item.fields.harga}</p>
+                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
                     </div>
+                </div>
                 `
             }
         })
@@ -351,6 +355,14 @@ function addToCart(item_id) {
     });
 }
 </script>
+
+
+    cardsBooks();
+    cardsRecc();
+
+    
+
+
 </script>
 
 </html>
