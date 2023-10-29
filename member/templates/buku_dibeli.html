@@ -1,0 +1,162 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PagePerfect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/style.css' %}">
+</head>
+<body>
+
+    <style>
+
+        .landing-section-book{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }        
+
+        .landing-section {
+        min-height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        }
+    
+        .landing-main { 
+        background: url(https://basecamplive.com/wp-content/uploads/2023/02/books.jpeg) no-repeat center center fixed; 
+        background-size: cover;
+        }
+    
+        .landing-section-content {
+        padding: 2rem;
+        background: rgba(0,0,0,0.5);
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #ccc;
+        }
+    
+        .brand {
+        margin: 0;
+        color: #1768BE;
+        }
+    
+        .brand-text {
+        color: #1768BE;
+        }
+
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            width: calc(33.33% - 20px); /* 3 item per baris */
+            background-color: #fff;
+        }
+
+        .card-container {
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            flex-wrap: nowrap; 
+            justify-content: flex-start; 
+            gap: 5px;
+            overflow-x: auto; 
+            justify-items: center; 
+            align-items: center;
+            justify-content: center;
+            margin: 28px;
+        }
+    </style>
+
+    <header class="header">
+        <nav class="navbar navbar-expand-lg bg-primary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">PagePerfect</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'main:register' %}">Register</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:login' %}">Login</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <section class="landing-section landing-main">
+        <div class="landing-section-content">
+            <h1 class="landing-main-text">
+                Welcome {{name}}
+            </h1>
+            <h2>
+                Here are the books you have bought!
+            </h2>
+            <div id="product_card" class="container_cards container card-container"></div>
+            <p class="landing-main-text">
+            </p>
+            <h1>
+                <span class="brand">P</span>age
+                <span class="brand">P</span>erfect
+            </h1>
+            <p class="landing-main-text">
+            </p>
+        </div>
+    </section>
+    <section class="landing-section-book">
+
+    </section>
+    
+</body>
+
+<script>
+    async function getProducts() {
+        return fetch("{% url 'member:show_books_bought' %}").then((res) => res.json())
+    }
+
+    async function cardsBooks() {
+        document.getElementById("product_card").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = ''
+        products.forEach((item) => {
+            htmlString += `
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${item.fields.user.username}</h5>
+                    <p class="card-text">Author : ${item.fields.authors}</p>
+                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                    <p class="card-text">Harga : ${item.fields.harga}</p>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                </div>
+            </div>
+            `
+        })
+        document.getElementById("product_card").innerHTML = htmlString
+    }   
+
+    cardsBooks()
+
+
+</script>
+
+</html>

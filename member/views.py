@@ -14,6 +14,7 @@ from book.models import Book
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.core import serializers
+from main.models import Member
 
 
 # Create your views here.
@@ -37,3 +38,16 @@ def logout_user(request):
 def get_books_json(request):
     books_user = Book.objects.filter()
     return HttpResponse(serializers.serialize('json', books_user))
+
+
+@login_required(login_url='/login')
+def show_books_bought(request):
+    member = Member.objects.all().filter(user=request.user)[0]
+    books = member.books_bought
+
+    context = {
+        'name': request.user.username,
+        'books':books
+    }
+
+    return render(request, "buku_dibeli.html", context)
