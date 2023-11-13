@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages  
 from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
@@ -14,6 +13,9 @@ from .models import Member, Employee, Author
 from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 import json
+from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
 
 # Create your views here.
 
@@ -40,11 +42,11 @@ def login_user(request):
             if role is not None:
 
                 if role == 'Member':
-                    return redirect('main:show_mainMember')
+                    return redirect('member:show_main')
                 elif role == 'Writer':
                     return redirect('main:show_mainWriter')
                 else:
-                    return redirect('main:show_mainEmployee')
+                    return redirect('employee:main')
             else :
                 return redirect('main:landing')
             
@@ -79,14 +81,6 @@ def register(request):
     return render(request, 'formRegister.html')
 
 
-@login_required(login_url='/login')
-def show_mainMember(request):
-
-    context = {
-        'name': request.user.username,
-    }
-
-    return render(request, "mainMember.html", context)
 
 @login_required(login_url='/login')
 def show_mainWriter(request):
@@ -99,13 +93,17 @@ def show_mainWriter(request):
 
 @login_required(login_url='/login')
 def show_mainEmployee(request):
+    return redirect('employee:main')
+
+@login_required(login_url='/login')
+def show_mainMember(request):
 
     context = {
         'name': request.user.username,
     }
 
-    return render(request, "mainEmployee.html", context)
-
+    return render(request, "mainMember.html", context)
+  
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:landing'))

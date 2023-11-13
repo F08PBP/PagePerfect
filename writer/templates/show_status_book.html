@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{%  block content %}
+
+<style>
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        text-align: center;
+        margin: 5px;
+        width: 395px; 
+        height: 300px; 
+        background-color: #f5f5f5; /* Background color */
+        border: 1px solid #ddd; /* Border color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift effect */
+    }
+    .card-title {
+        font-size: 24px; /* Title font size */
+        color: #333; /* Title text color */
+        font-family: 'Times New Roman', sans-serif; /* Title font family */
+    }
+
+    .card-text {
+        font-size: 16px; /* Text font size */
+        color: #555; /* Text color */
+        font-family: 'Arial', sans-serif; /* Text font family */
+    }
+
+    #Accepted {
+        color : green;
+        font-size: 30px;
+        font-weight: lighter;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    #NA {
+        color : red;
+        font-size: 30px;
+        font-weight: lighter;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    #Waiting {
+        color : grey;
+        font-size: 30px;
+        font-weight: lighter;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+          <a class="navbar-brand" href="#">{{ name }}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a href = "{% url 'main:show_mainWriter' %}">
+                    <button type="button" class="btn btn-info btn-sm" style="margin-left: 10px;">Main Page</button>
+                </a>
+                <a href = "{% url 'writer:show_collection' %}">
+                    <button type="button" class="btn btn-success btn-sm" style="margin-left: 10px;">Creation Library</button>
+                </a>
+                <a href = "{% url 'writer:show_revenue' %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="margin-left: 10px;">Book Revenue</button>
+                </a>
+                <a href="{% url 'main:logout' %}">
+                    <button type="button" class="btn btn-danger btn-sm" style="margin-left: 10px;">Logout</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<br>
+<div class="content-container">
+    <div class="card-container">
+        <h2>
+            <div id = "Accepted"></div>
+        </h2>
+        <h2>
+            <div id = "NA"></div>
+        </h2>
+        <h2>
+            <div id = "Waiting"></div>
+        </h2>
+        <div id = "acc_books"></div>
+        <div id = "na_books"></div>
+        <div id = "wa_books"></div>
+    </div>
+</div>
+
+<script>
+    async function getAccBooks() {
+        return fetch("{% url 'writer:get_acc_book_json' %}").then((res) => res.json())
+    }
+
+    
+    async function getNABooks() {
+        return fetch("{% url 'writer:get_denied_book_json' %}").then((res) => res.json())
+    }
+    
+    async function getWaitingBooks() {
+        return fetch("{% url 'writer:get_waiting_book_json' %}").then((res) => res.json())
+    }
+
+    async function refreshBooks() {
+        document.getElementById("product_cards").innerHTML = "";
+        const books = await getBooks();
+        let htmlString = "";
+        books.forEach((book) => {
+            htmlString += `
+            <div class="card col-md-4">
+                <div class="card-body">
+                    <h5 class="card-title">${book.fields.title}</h5>
+                    <p class="card-text">Author: ${book.fields.authors}</p>
+                    <p class="card-text">Price: ${book.fields.harga}</p>
+                    <p class="card-text">Stock: ${book.fields.jumlah_buku}</p>
+                    <p class="card-text">Sold: ${book.fields.jumlah_terjual}</p>
+                </div>
+            </div>`;
+        });
+        document.getElementById("product_cards").innerHTML = htmlString;
+        
+    }
+    refreshBooks()
+
+    async function refreshAccBooks() {
+        document.getElementById("acc_books").innerHTML = "";
+        const products = await getAccBooks();
+        let htmlString = "";
+        products.forEach((book) => {
+            htmlString += `
+                <div class="card col-md-4">
+                    <div class="card-body">
+                        <h5 class="card-title">${book.fields.title}</h5>
+                        <p class="card-text">Author: ${book.fields.authors}</p>
+                        <p class="card-text">${book.fields.statusAccept}</p>
+                    </div>
+                </div>`;
+            });
+            document.getElementById("acc_books").innerHTML = htmlString;
+            document.getElementById("Accepted").textContent = `Accepted`;
+        }
+    
+        refreshAccBooks()
+        
+        async function refreshNABooks() {
+            document.getElementById("na_books").innerHTML = "";
+            const products = await getNABooks();
+            let htmlString = "";
+            products.forEach((book) => {
+                htmlString += `
+                    <div class="card col-md-4">
+                        <div class="card-body">
+                            <h5 class="card-title">${book.fields.title}</h5>
+                            <p class="card-text">Author: ${book.fields.authors}</p>
+                            <p class="card-text">${book.fields.statusAccept}</p>
+                        </div>
+                    </div>`;
+                });
+                document.getElementById("na_books").innerHTML = htmlString;
+                document.getElementById("NA").textContent = `Denied`;
+            }
+
+        refreshNABooks()
+
+        async function refreshWABooks() {
+            document.getElementById("wa_books").innerHTML = "";
+            const products = await getWaitingBooks();
+            let htmlString = "";
+            products.forEach((book) => {
+                htmlString += `
+                    <div class="card col-md-4">
+                        <div class="card-body">
+                            <h5 class="card-title">${book.fields.title}</h5>
+                            <p class="card-text">Author: ${book.fields.authors}</p>
+                            <p class="card-text">${book.fields.statusAccept}</p>
+                        </div>
+                    </div>`;
+                });
+                document.getElementById("wa_books").innerHTML = htmlString;
+                document.getElementById("Waiting").textContent = `Waiting`;
+            }
+        refreshWABooks()
+
+</script>
+
+{% endblock content %}
+

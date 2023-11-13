@@ -57,6 +57,31 @@
         .brand-text {
         color: #1768BE;
         }
+
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            width: calc(33.33% - 20px); /* 3 item per baris */
+            background-color: #fff;
+        }
+
+        .card-container {
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            flex-wrap: nowrap; 
+            justify-content: flex-start; 
+            gap: 5px;
+            overflow-x: auto; 
+            justify-items: center; 
+            align-items: center;
+            justify-content: center;
+            margin: 28px;
+        }
     </style>
 
     <header class="header">
@@ -81,14 +106,20 @@
     </header>
     <section class="landing-section landing-main">
         <div class="landing-section-content">
+            <h1 class="landing-main-text">
+                Welcome {{name}}
+            </h1>
+            <h2>
+                Here are the books you have bought!
+            </h2>
+            <div id="product_card" class="container_cards container card-container"></div>
+            <p class="landing-main-text">
+            </p>
             <h1>
                 <span class="brand">P</span>age
                 <span class="brand">P</span>erfect
             </h1>
             <p class="landing-main-text">
-                Got tired of missing out on releases from your favourite author?
-                <br>
-                You have found a perfect solution...
             </p>
         </div>
     </section>
@@ -97,5 +128,35 @@
     </section>
     
 </body>
-</html>
 
+<script>
+    async function getProducts() {
+        return fetch("{% url 'member:show_books_bought' %}").then((res) => res.json())
+    }
+
+    async function cardsBooks() {
+        document.getElementById("product_card").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = ''
+        products.forEach((item) => {
+            htmlString += `
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">${item.fields.user.username}</h5>
+                    <p class="card-text">Author : ${item.fields.authors}</p>
+                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
+                    <p class="card-text">Harga : ${item.fields.harga}</p>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
+                </div>
+            </div>
+            `
+        })
+        document.getElementById("product_card").innerHTML = htmlString
+    }   
+
+    cardsBooks()
+
+
+</script>
+
+</html>

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+    
+{% block meta %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+{% endblock %}
+{% block content %} 
+<header class="header">
+  <nav class="navbar navbar-expand-lg bg-primary">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'employee:main' %}">PagePerfect</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> 
+                  <li class="nav-item d-flex">
+                      <a class="btn btn-danger me-2" href="{% url 'main:logout' %}" role="button">Logout</a> 
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+</header>
+    <div class="container mt-5">
+        <button class="btn btn-primary" onclick="Back()">Back</button>
+        <div id="data-container">
+            
+        </div>
+        
+    </div>
+
+
+<script>
+    function Back() {
+            window.history.back();
+        }
+    $(document).ready(function() {
+        var id = '{{ book_id }}'
+        $.ajax({
+            url: '../api/book/' + id ,  
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Handle the returned data here
+
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                // Do something with each item, for example, append it to a list
+                    $('#data-container').append(
+                        "<div class=\"row\">" +
+                        "<div class=\"col-12 text-center\">" +
+                        "<h1>" + item.fields.title + "</h1>" +
+                        "</div>" + 
+                        "<table class=\"table\"> " +
+                        "<thead>"+
+                          "<tr>" +
+                            "<th scope=\"col\"></th> " +
+                            "<th scope=\"col\"></th> " +
+                          "</tr> " + 
+                        "</thead> " +
+                        "<tbody id> " +
+                            "<tr>" +
+                                "<th scope=\"row\">Author</th>" +
+                            "<td>" + item.fields.authors + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Price</th>" +
+                            "<td>" + item.fields.harga + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Rating</th>" +
+                            "<td>" + item.fields.average_rating + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">ISBN</th>" +
+                            "<td>" + item.fields.isbn + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Language</th>" +
+                            "<td>" + item.fields.language_code + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Num Pages</th>" +
+                            "<td>" + item.fields.num_pages + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Publication Date</th>" +
+                            "<td>" + item.fields.publication_date + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<th scope=\"row\">Publisher</th>" +
+                            "<td>" + item.fields.publisher + "</td>" +
+                          "</tr>" +
+                        "</tbody> " +
+                      "</table>"
+                        
+                        );
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+{% endblock %}
