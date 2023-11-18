@@ -18,6 +18,7 @@ from main.models import Member
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from employee.models import Catalog
 
 
 # Create your views here.
