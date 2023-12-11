@@ -80,8 +80,6 @@ def register(request):
             return JsonResponse({'success': False, 'error_message': 'Invalid registration data'})
     return render(request, 'formRegister.html')
 
-
-
 @login_required(login_url='/login')
 def show_mainWriter(request):
 
@@ -108,6 +106,3 @@ def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:landing'))
     return response
-
-
-
