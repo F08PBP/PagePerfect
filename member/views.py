@@ -98,3 +98,4 @@ def shopping_cart(request):
     }
 
     return render(request, "shopping_cart.html", context)
+
