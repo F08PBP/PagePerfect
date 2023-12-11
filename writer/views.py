@@ -15,6 +15,8 @@ def add_book_ajax(request):
         
         new_book = Book(title=title, authors=request.user.username, harga=harga, jumlah_buku=jumlah_buku, statusAccept='WAITING')
         new_book.save()
+        new_book.bookID = new_book.pk + 80
+        new_book.save()
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
 

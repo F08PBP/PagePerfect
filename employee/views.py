@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from book.models import Book
 from django.http import HttpResponse
 from django.core import serializers
-from .serializers import BookSerializer
 
 from .models import Catalog
 from main.models import Employee
