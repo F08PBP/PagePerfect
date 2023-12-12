@@ -60,13 +60,22 @@
 
 
         .card {
+            background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin: 10px;
-            width: calc(33.33% - 20px); /* 3 item per baris */
+            width: fit-content;
+        }
+
+        .transaction-container {
             background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: fit-content;
         }
 
         .card-container {
@@ -87,19 +96,16 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">PagePerfect</a>
+              <a class="navbar-brand" href="{% url 'member:show_main' %}">PagePerfect</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'main:register' %}">Register</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:login' %}">Login</a>
-                  </li>
-                </ul>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
+                    </li>
+                  </ul>
               </div>
             </div>
           </nav>
@@ -122,39 +128,34 @@
             <p class="landing-main-text">
             </p>
         </div>
+        <div class="container_cards container card-container">
+            {% for transaction in transactions_info %}
+                <div class="transaction-container mb-4">
+                    <h3>Transaction #{{ transaction.transaction_id }}</h3>
+                    <p>Transaction Date: {{ transaction.date_added|date:"F d, Y" }}</p>
+                    <div class="d-flex flex-wrap">
+                        {% for book in transaction.books %}
+                            <div class="card me-2 mb-2">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.title }}</h5>
+                                    <p class="card-text">Quantity: {{ book.quantity }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <p>Notes: {{ transaction.notes }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        
     </section>
     <section class="landing-section-book">
-
+        
     </section>
     
 </body>
 
 <script>
-    async function getProducts() {
-        return fetch("{% url 'member:show_books_bought' %}").then((res) => res.json())
-    }
-
-    async function cardsBooks() {
-        document.getElementById("product_card").innerHTML = ""
-        const products = await getProducts()
-        let htmlString = ''
-        products.forEach((item) => {
-            htmlString += `
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">${item.fields.user.username}</h5>
-                    <p class="card-text">Author : ${item.fields.authors}</p>
-                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                    <p class="card-text">Harga : ${item.fields.harga}</p>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
-                </div>
-            </div>
-            `
-        })
-        document.getElementById("product_card").innerHTML = htmlString
-    }   
-
-    cardsBooks()
 
 
 </script>
