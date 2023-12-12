@@ -20,3 +20,20 @@ class Order(models.Model):
         for buku in self.buku.all():
             total += buku.book.harga
         return total
+    
+class CartItem(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+class BoughtItem(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    date_added = models.DateField(auto_now_add=True)
+    cart = models.ManyToManyField(CartItem)
+    notes = models.TextField(null=True, blank=True)
+
+class PurchasedItem(models.Model):
+    bought_item = models.ForeignKey(BoughtItem, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
