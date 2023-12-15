@@ -1,8 +1,9 @@
+import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.contrib import messages  
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from book.models import Book
 from django.core import serializers
 # Create your views here.
@@ -20,6 +21,26 @@ def add_book_ajax(request):
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
 
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Book.objects.create(
+            title = data["title"],
+            authors = request.user.username,
+            harga = int(data["harga"]),
+            jumlah = int(data["jumlah_buku"])
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
 
 def get_book_json(request):
     books_item = Book.objects.all().filter(authors=request.user.username)

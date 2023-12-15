@@ -13,4 +13,5 @@ urlpatterns = [
     path('show-status-book/', views.show_status_book, name="show_status_book"),
     path('show-revenue/', views.show_revenue, name="show_revenue"),
     path('json/', views.show_json, name='show_json'),
+    path('create-flutter/', views.create_product_flutter, name='create_product_flutter'),
 ]
