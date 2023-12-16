@@ -10,6 +10,7 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        money = 0
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -19,6 +20,7 @@ def login(request):
             role = None
             if Member.objects.filter(user=user).exists():
                 role = 'Member'
+                money = Member.objects.get(user=user).money
             elif Author.objects.filter(user=user).exists():
                 role = 'Writer'
             elif Employee.objects.filter(user=user).exists():
@@ -30,6 +32,7 @@ def login(request):
                     "username": user.username,
                     "status": True,
                     "role": role,
+                    "money": money,
                     "message": "Login sukses!"
                 }, status=200)
             else:
