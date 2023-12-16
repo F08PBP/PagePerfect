@@ -259,8 +259,19 @@ def confirm_purchase_flutter(request):
             notes=notes,
         )
         bought_item.save()
-        
+
+        total_price = 0
         for item in cart_items:
+            # Update jumlah_buku and jumlah_terjual
+            book = item.book
+            book.jumlah_buku -= item.quantity
+            book.jumlah_terjual += item.quantity
+            book.save()
+
+            # Calculate total price
+            total_price += item.quantity * book.harga
+
+            # Create PurchasedItem
             PurchasedItem.objects.create(
                 bought_item=bought_item,
                 member=member,
@@ -268,13 +279,21 @@ def confirm_purchase_flutter(request):
                 quantity=item.quantity,
             )
 
-        cart_items.delete()
-        
-        # Kembali ke halaman dengan menggunakan AJAX response
-        return JsonResponse({'status': 'success', 'message': 'Purchase confirmed'}, status=200)
+        # Check if member has enough money
+        if member.money >= total_price:
+            # Deduct total price from member's money
+            member.money -= total_price
+            member.save()
+            # Delete cart items after purchase
+            cart_items.delete()
+
+            # Return success response
+            return JsonResponse({'status': 'success', 'message': 'Purchase confirmed', 'money': member.money}, status=200)
+        else:
+            # Return error response if not enough money
+            return JsonResponse({'status': 'error', 'message': 'Not enough money'}, status=400)
     else:
         return HttpResponseNotFound({'status': 'error', 'message': 'Invalid request'}, status=404)
-    
 
 def show_transaction(request):
     if request.user.is_authenticated:
@@ -284,6 +303,7 @@ def show_transaction(request):
         return HttpResponse(serializers.serialize("json", data), content_type="application/json")
     else:
         return HttpResponseNotFound({'status': 'error', 'message': 'Invalid request'}, status=404)
+        
 
 def show_purchased_item(request, id):
     member = Member.objects.get(user=request.user)
@@ -293,14 +313,20 @@ def show_purchased_item(request, id):
     return HttpResponse(serializers.serialize("json", purchased_items), content_type="application/json")
 
 def get_books_for_json(request):
-    data = Book.objects.all()
-    temp_books = []
-    for i in data:
-        if i.pk > 100: 
-            continue
-        temp_books.append(i)
+    catalog_entries = Catalog.objects.filter(isShowToMember=True)
+    book_ids = catalog_entries.values_list('book')
+    books = Book.objects.filter(pk__in=book_ids, statusAccept="ACCEPT")
+    books_data = serializers.serialize('json', books)
+    books_list = json.loads(books_data)
+    return JsonResponse(books_list, safe=False)
 
-    return HttpResponse(serializers.serialize("json", temp_books), content_type="application/json")
+def get_books_for_json_by_title(request, title):
+    catalog_entries = Catalog.objects.filter(isShowToMember=True)
+    book_ids = catalog_entries.values_list('book')
+    books = Book.objects.filter(pk__in=book_ids, statusAccept="ACCEPT", title__icontains=title)
+    books_data = serializers.serialize('json', books)
+    books_list = json.loads(books_data)
+    return JsonResponse(books_list, safe=False)
 
 def show_cart_json(request):
     member = Member.objects.get(user=request.user)
