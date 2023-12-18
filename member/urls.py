@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from book.views import get_books
-from member.views import add_book_to_cart, add_book_to_cart_flutter, confirm_purchase, confirm_purchase_flutter, delete_cart, edit_cart, get_books_for_json, get_books_for_json_by_title, get_cart, show_cart_json, show_main, logout_user, get_books_json, show_books_bought, get_money, add_money, shopping_cart, show_purchased_item, show_transaction
+from member.views import add_book_to_cart, add_book_to_cart_flutter, confirm_purchase, confirm_purchase_flutter, delete_cart, edit_cart, get_books_for_json, get_books_for_json_by_title, get_cart, show_cart_json, show_main, logout_user, get_books_json, show_books_bought, get_money, add_money, shopping_cart, show_purchased_item, show_transaction, add_money_flutter
 app_name = 'member'
 
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     path('get-book-json/', get_books_for_json, name='get_books_for_json'),
     path('get-book-json/<str:title>/', get_books_for_json_by_title, name='get_books_for_json_by_title'),
     path('show-purchased-json/<int:id>/', show_purchased_item, name='show_purchased_item'),
+    path('add-money-flutter/', add_money_flutter, name='add_money_flutter'),
 ]

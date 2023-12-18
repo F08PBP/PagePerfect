@@ -313,7 +313,7 @@ def show_purchased_item(request, id):
     return HttpResponse(serializers.serialize("json", purchased_items), content_type="application/json")
 
 def get_books_for_json(request):
-    catalog_entries = Catalog.objects.filter(isShowToMember=True)
+    catalog_entries = Catalog.objects.filter(isShowToMember = True).all()
     book_ids = catalog_entries.values_list('book')
     books = Book.objects.filter(pk__in=book_ids, statusAccept="ACCEPT")
     books_data = serializers.serialize('json', books)
@@ -321,7 +321,7 @@ def get_books_for_json(request):
     return JsonResponse(books_list, safe=False)
 
 def get_books_for_json_by_title(request, title):
-    catalog_entries = Catalog.objects.filter(isShowToMember=True)
+    catalog_entries = Catalog.objects.filter(isShowToMember=True).all()
     book_ids = catalog_entries.values_list('book')
     books = Book.objects.filter(pk__in=book_ids, statusAccept="ACCEPT", title__icontains=title)
     books_data = serializers.serialize('json', books)
@@ -332,3 +332,15 @@ def show_cart_json(request):
     member = Member.objects.get(user=request.user)
     data = CartItem.objects.filter(member = member)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def add_money_flutter(request):
+    if request.method == 'POST':
+        member = Member.objects.get(user=request.user)
+        data = json.loads(request.body)
+        money = int(data["uang"])
+        member.money += money
+        member.save()
+        return JsonResponse({'status': 'success', 'message': 'Add money successed', 'money': member.money}, status=200)
+    else:
+        return HttpResponseNotFound({'status': 'error', 'message': 'Invalid request'}, status=404)
