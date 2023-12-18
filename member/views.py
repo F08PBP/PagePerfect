@@ -254,11 +254,6 @@ def confirm_purchase_flutter(request):
         notes = data["notes"]
 
         cart_items = CartItem.objects.filter(member=member)
-        bought_item = BoughtItem(
-            member=member,
-            notes=notes,
-        )
-        bought_item.save()
 
         total_price = 0
         for item in cart_items:
@@ -271,16 +266,25 @@ def confirm_purchase_flutter(request):
             # Calculate total price
             total_price += item.quantity * book.harga
 
-            # Create PurchasedItem
-            PurchasedItem.objects.create(
-                bought_item=bought_item,
-                member=member,
-                book=item.book,
-                quantity=item.quantity,
-            )
 
         # Check if member has enough money
         if member.money >= total_price:
+            bought_item = BoughtItem(
+                member=member,
+                notes=notes,
+            )
+            bought_item.save()
+
+            for item in cart_items:
+                # Create PurchasedItem
+                PurchasedItem.objects.create(
+                    bought_item=bought_item,
+                    member=member,
+                    book=item.book,
+                    quantity=item.quantity,
+                )
+
+            
             # Deduct total price from member's money
             member.money -= total_price
             member.save()
