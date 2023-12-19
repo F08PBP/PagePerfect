@@ -14,6 +14,37 @@
     <link rel="stylesheet" type="text/css" href="{% static 'pages/style.css' %}">
 </head>
 <body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Book to Cart</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" readonly></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="col-form-label">Quantity:</label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary" onclick="decrementQuantity()">-</button>
+                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1">
+                                <button type="button" class="btn btn-secondary" onclick="incrementQuantity()">+</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_form" data-bs-dismiss="modal">Add Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <style>
 
@@ -134,7 +165,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">PagePerfect</a>
+              <a class="navbar-brand" href="{% url 'member:show_main' %}">PagePerfect</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -241,7 +272,7 @@
                             <p class="card-text">Author : ${item.fields.authors}</p>
                             <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
                             <p class="card-text">Harga : ${item.fields.harga}</p>
-                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" onclick="addToCart('${ item.fields.pk }')">Add Book to Cart</button>
+                            <button type="button" class="btn btn-primary" onclick="setBookTitleInModal(this.getAttribute('data-book-title'))" data-book-title="${ item.fields.title }" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Book to Cart</button>
                         </div>
                     </div>
                 `
@@ -250,6 +281,48 @@
         document.getElementById("product_card").innerHTML = htmlString;
     }   
 
+    document.getElementById("button_form").addEventListener("click", function() {
+        const title = document.getElementById('title').value;
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("{% url 'member:add_book_to_cart' %}", {
+            method: "POST",
+            body: JSON.stringify({ title: title, quantity: quantity }),
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Book added to cart");
+            } else {
+                console.error("Failed to add book");
+            }
+        });
+    });
+
+
+    function setBookTitleInModal(title) {
+        document.getElementById('title').value = title;
+        document.getElementById('quantity').value = 1;
+    }
+
+    function incrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+    }
+
+    function decrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+        }
+    }
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {

@@ -8,11 +8,13 @@ from main.models import Member, Employee, Author
 
 @csrf_exempt
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        money = 0
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
             auth_login(request, user)
             # Status login sukses.
 
@@ -32,9 +34,8 @@ def login(request):
         else:
             return JsonResponse({
                 "status": False,
-                "message": "Login gagal, akun dinonaktifkan."
+                "message": "Login gagal, periksa kembali username atau kata sandi."
             }, status=401)
-
     else:
         return JsonResponse({
             "status": False,

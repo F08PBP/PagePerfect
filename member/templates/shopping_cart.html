@@ -14,6 +14,73 @@
     <link rel="stylesheet" type="text/css" href="{% static 'pages/style.css' %}">
 </head>
 <body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit your Cart!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" readonly></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="col-form-label">Quantity:</label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary" onclick="decrementQuantity()">-</button>
+                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1">
+                                <button type="button" class="btn btn-secondary" onclick="incrementQuantity()">+</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_form" data-bs-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Buy -->
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buyModalLabel">Confirm Your Purchase</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="buyForm" onsubmit="return false;">
+                        {% csrf_token %}
+                        <!-- Anda dapat menambahkan detail tambahan di sini sesuai kebutuhan -->
+                        <div class="mb-3">
+                            <label for="totalPrice" class="form-label">Total Price:</label>
+                            <input type="text" class="form-control" id="totalPrice" name="totalPrice" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userMoney" class="form-label">Your Balance:</label>
+                            <input type="text" class="form-control" id="userMoney" name="userMoney" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="purchaseNotes" class="form-label">Notes:</label>
+                            <textarea class="form-control" id="purchaseNotes" name="purchaseNotes" rows="3"></textarea>
+                        </div>
+                        <!-- Tambahkan detail lain jika diperlukan -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmPurchaseButton">Confirm Purchase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <style>
 
@@ -82,12 +149,17 @@
             justify-content: center;
             margin: 28px;
         }
+
+        .buy_button{
+            margin-top: 20px;
+            width: 150px;
+        }
     </style>
 
 <header class="header">
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">PagePerfect</a>
+          <a class="navbar-brand" href="{% url 'member:show_main' %}">PagePerfect</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -123,6 +195,26 @@
             <p class="landing-main-text">
             </p>
         </div>
+
+        <div id="dataContainer" data-total-harga="{{ total_harga }}" data-uang="{{ uang }}" style="display:none;"></div>
+        <button type="button" class="buy_button btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal" onclick="preparePurchase()">Buy</button>
+
+        <div class="container_cards container card-container">
+            {% for cart in cart_items %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cart.title }}</h5>
+                        <p class="card-text">Harga: {{ cart.harga }}</p>
+                        <p class="card-text">Quantity: {{ cart.quantity }}</p>
+                        
+                        <a href="{% url 'member:delete_cart' title=cart.title %}">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </a>
+                        <button type="button" class="btn btn-primary" onclick="setBookTitleInModal('{{ cart.title }}', '{{ cart.quantity }}')" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </section>
     <section class="landing-section-book">
 
@@ -131,31 +223,97 @@
 </body>
 
 <script>
-    async function getProducts() {
-        return fetch("{% url 'member:show_books_bought' %}").then((res) => res.json())
+
+    document.getElementById("button_form").addEventListener("click", function() {
+        const title = document.getElementById('title').value;
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("{% url 'member:edit_cart' %}", {
+            method: "POST",
+            body: JSON.stringify({ title: title, quantity: quantity }),
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Book added to cart");
+                window.location.href = '';
+            } else {
+                console.error("Failed to add book");
+            }
+        });
+    });
+
+
+    function setBookTitleInModal(title, quantity) {
+        document.getElementById('title').value = title;
+        document.getElementById('quantity').value = quantity;
     }
 
-    async function cardsBooks() {
-        document.getElementById("product_card").innerHTML = ""
-        const products = await getProducts()
-        let htmlString = ''
-        products.forEach((item) => {
-            htmlString += `
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">${item.fields.user.username}</h5>
-                    <p class="card-text">Author : ${item.fields.authors}</p>
-                    <p class="card-text">Jumlah Buku : ${item.fields.jumlah_buku}</p>
-                    <p class="card-text">Harga : ${item.fields.harga}</p>
-                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Book to Cart</button>
-                </div>
-            </div>
-            `
-        })
-        document.getElementById("product_card").innerHTML = htmlString
-    }   
+    function incrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+    }
 
-    cardsBooks()
+    function decrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+        }
+    }
+
+    function preparePurchase() {
+        // Ambil elemen yang memiliki data-total-harga dan data-uang
+        var dataContainer = document.getElementById('dataContainer');
+        var totalPrice = dataContainer.getAttribute('data-total-harga');
+        var userMoney = dataContainer.getAttribute('data-uang');
+
+        // Set nilai ke dalam modal
+        document.getElementById('totalPrice').value = totalPrice;
+        document.getElementById('userMoney').value = userMoney;
+
+        
+    }
+
+    document.getElementById("confirmPurchaseButton").addEventListener("click", function() {
+        const notes = document.getElementById('purchaseNotes').value || ''; 
+        const totalPrice = document.getElementById('totalPrice').value;
+        const userMoney = document.getElementById('userMoney').value;
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        if (parseInt(userMoney) >= parseInt(totalPrice)) {
+            fetch("{% url 'member:confirm_purchase' %}", {
+                method: "POST",
+                body: JSON.stringify({ purchaseNotes: notes }),
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Handle success (e.g., show message, redirect, etc.)
+                    console.log(data.message);
+                    window.location.href = "{% url 'member:show_books_bought' %}";
+                } else {
+                    // Handle error
+                    console.error("Failed to confirm purchase");
+                }
+            });
+        } else {
+            // Handle insufficient funds
+            console.error("Insufficient funds to complete the purchase");
+        }
+    });
+
+
 
 
 </script>
