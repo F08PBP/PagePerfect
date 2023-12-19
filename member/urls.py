@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
-from member.views import show_main, logout_user, get_books_json, show_books_bought, get_money, add_money, shopping_cart
+from book.views import get_books
+from member.views import add_book_to_cart, add_book_to_cart_flutter, confirm_purchase, confirm_purchase_flutter, delete_cart, edit_cart, get_books_for_json, get_books_for_json_by_title, get_cart, show_cart_json, show_main, logout_user, get_books_json, show_books_bought, get_money, add_money, shopping_cart, show_purchased_item, show_transaction, add_money_flutter
 app_name = 'member'
 
 urlpatterns = [
@@ -10,5 +11,19 @@ urlpatterns = [
     path('show_books_bought/', show_books_bought, name="show_books_bought"),
     path('get_money/', get_money, name='get_money'),
     path('add_money/', add_money, name='add_money'),
-    path('shopping_cart/', shopping_cart, name='shopping_cart' )
-    ]
+    path('shopping_cart/', shopping_cart, name='shopping_cart' ),
+    path('add_book_to_cart/', add_book_to_cart, name='add_book_to_cart'),
+    path('add_book_to_cart_flutter/', add_book_to_cart_flutter, name='add_book_to_cart_flutter'),
+    path('edit-cart/', edit_cart, name='edit_cart'),
+    path('get-cart/', get_cart, name='get_cart'),
+    path('delete-cart/<str:title>/', delete_cart, name='delete_cart'),
+    path('confirm_purchase/', confirm_purchase, name='confirm_purchase'),
+    path('confirm_purchase_flutter/', confirm_purchase_flutter, name='confirm_purchase_flutter'),
+    path('get-book/', get_books, name='get_books'),
+    path('show-transaction/', show_transaction, name='show_transaction'),
+    path('show-cart-json/', show_cart_json, name='show_cart_json'),
+    path('get-book-json/', get_books_for_json, name='get_books_for_json'),
+    path('get-book-json/<str:title>/', get_books_for_json_by_title, name='get_books_for_json_by_title'),
+    path('show-purchased-json/<int:id>/', show_purchased_item, name='show_purchased_item'),
+    path('add-money-flutter/', add_money_flutter, name='add_money_flutter'),
+]

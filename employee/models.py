@@ -6,3 +6,6 @@ from book.models import Book
 class Catalog(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     isShowToMember = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.book.title
