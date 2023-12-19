@@ -38,6 +38,8 @@ def create_product_flutter(request):
         
 
         new_product.save()
+        new_product.bookID = new_product.pk + 80
+        new_product.save()
 
         return JsonResponse({"status": "success"}, status=200)
     else:
