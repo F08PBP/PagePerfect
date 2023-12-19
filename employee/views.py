@@ -6,7 +6,6 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from .models import Catalog
 from main.models import Employee
-
 import json
 
 # Create your views here.
