@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from book.models import Book
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.core import serializers
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import Catalog
 from main.models import Employee
 
@@ -160,3 +160,63 @@ def test(request):
 # Tambahan buat bisa akses employee.html dari views.py di main
 def employee_page(request):
     return render(request, 'employee.html')
+
+def get_books_for_employee(request):
+    books = Book.objects.filter(pk__lte=100, statusAccept ="WAITING")[:100]
+    books_data = serializers.serialize('json', books)
+    books_list = json.loads(books_data)
+    return JsonResponse(books_list, safe=False)
+
+def get_catalog_json(request):
+    books = Book.objects.filter(pk__lte=100, statusAccept ="ACCEPT")[:100]
+    books_data = serializers.serialize('json', books)
+    books_list = json.loads(books_data)
+    return JsonResponse(books_list, safe=False)
+
+def get_active_json(request):
+    catalog = Catalog.objects.all()
+    catalog_data = serializers.serialize('json', catalog)
+    catalog_list = json.loads(catalog_data)
+    return JsonResponse(catalog_list, safe=False)
+
+@csrf_exempt
+def update_book_status(request, book_id, status):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=book_id)
+        if status in [choice[0] for choice in Book.STATUS_CHOICES]:
+            book.statusAccept = status
+            book.save()
+            return JsonResponse({'status': 'success', 'message': 'Book status updated'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid status'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def add_book_stock(request):
+    if request.method == "POST":
+        data = request.POST
+        book_id = data.get('book_id')
+        added_stock = int(data.get('added_stock'))
+
+        try:
+            book = Book.objects.get(pk=book_id)
+            book.jumlah_buku += added_stock
+            book.save()
+            return JsonResponse({'status': 'success', 'new_stock': book.jumlah_buku})
+        except Book.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Book not found'}, status=404)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+@csrf_exempt
+def toggle_catalog_visibility(request, pk):
+    if request.method == 'POST':
+        try:
+            catalog_entry = Catalog.objects.get(pk=pk)
+            catalog_entry.isShowToMember = not catalog_entry.isShowToMember
+            catalog_entry.save()
+            return JsonResponse({'success': True, 'isShowToMember': catalog_entry.isShowToMember})
+        except Catalog.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Catalog not found'}, status=404)
+    else:
+        return HttpResponseNotAllowed(['POST'])

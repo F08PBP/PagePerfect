@@ -37,7 +37,8 @@
                             <th scope="col">Title</th>
                             <th scope="col">Stock</th>
                             <th scope="col">Sold</th>
-                            <th scope="col"></th>
+                            <th scope="col">Details</th>
+                            <th scope="col">Add Stock</th>
                           </tr>
                         </thead>
                         <tbody id ='data-container'>
@@ -46,7 +47,40 @@
                 </div>
         
 
-    
+<body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Book to Cart</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" readonly></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="col-form-label">Add Stock:</label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary" onclick="decrementQuantity()">-</button>
+                                <input type="text" class="form-control text-center" id="quantity" name="quantity" value="1">
+                                <button type="button" class="btn btn-secondary" onclick="incrementQuantity()">+</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_form" data-bs-dismiss="modal">Add Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
 </div>
     </div>
 
@@ -73,7 +107,12 @@
                             "<td>" + item.jumlah_buku + "</td>" +
                             "<td>" + item.jumlah_terjual + "</td>" +
 
-                            "<td> <a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> </td>" +
+                            "<td>" + 
+                                "<a class=\"btn btn-primary\" href=\"book/" + item.bookID + "\" role=\"button\">DETAIL</a> " +
+                            "</td>" +        
+                            "<td>" + 
+                                "<button class=\"btn btn-success\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-book-title=\"" + item.title + "\" onclick=\"setBookTitleInModal(this)\">Add</button>" + 
+                            "</td>" +        
                           "</tr>"
                           );
                 
@@ -84,5 +123,28 @@
             }
         });
     });
+
+    function setBookTitleInModal(buttonElement) {
+        var bookTitle = buttonElement.getAttribute('data-book-title');
+        document.getElementById('title').value = bookTitle;
+        document.getElementById('quantity').value = 1; // Set default quantity to 1
+    }
+
+    function incrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+    }
+
+    function decrementQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+        }
+    }
+
+
+
 </script>
 {% endblock %}
