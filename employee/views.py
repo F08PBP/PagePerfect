@@ -184,6 +184,10 @@ def update_book_status(request, book_id, status):
         book = get_object_or_404(Book, pk=book_id)
         if status in [choice[0] for choice in Book.STATUS_CHOICES]:
             book.statusAccept = status
+            catalog= Catalog.objects.create(
+                book=book,
+            )
+            catalog.save()
             book.save()
             return JsonResponse({'status': 'success', 'message': 'Book status updated'})
         else:
