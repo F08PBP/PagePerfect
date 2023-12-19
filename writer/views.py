@@ -32,7 +32,8 @@ def create_product_flutter(request):
             title = data["title"],
             authors = data["authors"],
             harga = int(data["harga"]),
-            jumlah = int(data["jumlah_buku"])
+            jumlah = int(data["jumlah_buku"]),
+            statusAccept = data["statusAccept"]
         )
         
 
