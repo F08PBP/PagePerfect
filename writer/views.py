@@ -30,10 +30,11 @@ def create_product_flutter(request):
 
         new_product = Book.objects.create(
             title = data["title"],
-            authors = request.user.username,
+            authors = data["authors"],
             harga = int(data["harga"]),
             jumlah = int(data["jumlah_buku"])
         )
+        
 
         new_product.save()
 
