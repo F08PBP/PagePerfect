@@ -73,8 +73,8 @@ def logout(request):
         }, status=200)
     except:
         return JsonResponse({
-        "status": False,
-        "message": "Logout gagal."
+        "status": True,
+        "message": "Logout Berhasil."
         }, status=401)
 
 
